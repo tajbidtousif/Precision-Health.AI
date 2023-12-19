@@ -21,102 +21,134 @@ $conn->close();
 ?>
 
 
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="admin_dashboard.css">
-</head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+	<!-- Boxicons -->
+	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+	<!-- My CSS -->
+	<link rel="stylesheet" href="admin_dashboard.css">
+
+	<title>Precision Health Community</title>
+</head>
 <body>
 
-    <input type="checkbox" id="check">
 
-    <header>
-        <label for="check">
-            <i class="fa fa-bars" id="side_nav_btn"></i>
-        </label>
-        <div class="left_side">
-            <h3>Precision Health Community</h3>
-        </div>
-    </header>
-    <div class="side-nav">
-        <div class="logo">
-            <img src="http://localhost/Project-4800/img/adminlogo.jpg" alt="Logo" class="image">
-        </div>
+	<!-- SIDEBAR -->
+	<section id="sidebar">
+		<a href="#" class="brand">
+			<i class='bx bxs-smile'></i>
+			<span class="text">Precision Health</span>
+		</a>
+		<ul class="side-menu top">
+			<li class="active">
+				<a href="#">
+					<i class='bx bxs-dashboard' ></i>
+					<span class="text">Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<a href="/Project-4800/admin-panel/UserInfo.php">
+					<i class='bx bxs-shopping-bag-alt' ></i>
+					<span class="text">UserInfo</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-doughnut-chart' ></i>
+					<span class="text">Analytics</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-message-dots' ></i>
+					<span class="text">Message</span>
+				</a>
+			</li>
+			<li>
+				<a href="#">
+					<i class='bx bxs-group' ></i>
+					<span class="text">Team</span>
+				</a>
+			</li>
+		</ul>
+		<ul class="side-menu">
+			<li>
+				<a href="#">
+					<i class='bx bxs-cog' ></i>
+					<span class="text">Settings</span>
+				</a>
+			</li>
+			<li>
+				<a href="#" class="logout">
+					<i class='bx bxs-log-out-circle' ></i>
+					<span class="text">Logout</span>
+				</a>
+			</li>
+		</ul>
+	</section>
+	<!-- SIDEBAR -->
 
-        <a href="#dashboard"><i class="fa fa-desktop"><span>Dashboard</span></i></a>
-        <a href="#user-info"><i class="fa-solid fa-user"><span>User-Info</span></i></a>
-        <a href="#"><i class="fa fa-table"><span>Tables</span></i></a>
-        <a href="#"><i class="fa fa-th"><span>forms</span></i></a>
-        <a href="#"><i class="fa fa-info-circle"><span>about</span></i></a>
-        <a href="#"><i class="fa fa-sliders"><span>Settings</span></i></a>
-    </div>
-    <div class="banner">
 
-        <div id="dashboard" class="section">
-            <div class="cart-container">
-                <i class="fa fa-shopping-cart" id="cart-icon"></i>
-                <span id="user-count">
-                    <?php echo $result->num_rows; ?>
-                </span>
-            </div>
-        </div>
 
-        <div id="user-info" class="section">
-            <div id="content">
-                <h2>User Information</h2>
-                <table id="userTable">
-                    <tr>
-                        <th>UID</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Password</th>
-                        <th>Signup Time</th>
-                        <th>OTP</th>
-                        <th>Activation Code</th>
-                        <th>Reset Code</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                    </tr>
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>{$row['uid']}</td>";
-                            echo "<td>{$row['name']}</td>";
-                            echo "<td>{$row['email']}</td>";
-                            echo "<td>{$row['password']}</td>";
-                            echo "<td>{$row['signup_time']}</td>";
-                            echo "<td>{$row['otp']}</td>";
-                            echo "<td>{$row['activation_code']}</td>";
-                            echo "<td>{$row['reset_code']}</td>";
-                            echo "<td>{$row['status']}</td>";
+	<!-- CONTENT -->
+	<section id="content">
+		<!-- NAVBAR -->
+		<nav>
+			<a href="#" class="profile">
+				<img src="img/people.png">
+			</a>
+		</nav>
+		<!-- NAVBAR -->
 
-                           //delete button here.... confirmed by author
+		<!-- MAIN -->
+		<main>
+			<div class="head-title">
+				<div class="left">
+					<h1>Dashboard</h1>
+					<ul class="breadcrumb">
+						<li>
+							<a href="#">Dashboard</a>
+						</li>
+						<li><i class='bx bx-chevron-right' ></i></li>
+						<li>
+							<a class="active" href="#">Home</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-                            echo "<td><form method='post' action='delete_user.php'>";
-                            echo "<input type='hidden' name='user_id' value='{$row['uid']}'>";
-                            echo "<button type='submit' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</button>";
-                            echo "</form></td>";
+			<ul class="box-info">
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>
+						<?php echo $result->num_rows; ?>
+						</h3>
+						<p>Total User</p>
+					</span>
+				</li>
+				<li>
+					<i class='bx bxs-group' ></i>
+					<span class="text">
+						<h3>0</h3>
+						<p>Inactive Users</p>
+					</span>
+				</li>
+			</ul>
 
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='10'>No users found</td></tr>";
-                    }
-                    ?>
-                </table>
-            </div>
-        </div>
+			</div>
+		</main>
+		<!-- MAIN -->
+	</section>
+	<!-- CONTENT -->
+	
 
-    </div>
-
-    <script src="https://kit.fontawesome.com/b478a02406.js" crossorigin="anonymous"></script>
-
+	<script src="script.js"></script>
 </body>
-
 </html>
