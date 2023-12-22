@@ -36,56 +36,59 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Details</title>
 
-
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
             margin: 0;
             padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         #content {
             max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border: 1px solid #0c0e10;
+            margin: 20px;
+            padding: 30px;
+            background-color: #ffffff;
+            border: 1px solid #ddd;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            text-align: center; /* Center the content */
         }
 
-        h2 {
-            text-align: center;
-            color: #333;
-        }
+        /* Your existing styles remain unchanged */
 
-        p {
+        /* Additional style for user details */
+        .user-detail {
             margin-bottom: 10px;
         }
-
-        /* Add any additional styling as needed */
     </style>
 
 </head>
 
 <body>
-    
-    <?php if (isset($user_details)): ?>
-        <h2>User Details</h2>
-        <p>User ID:
-            <?php echo $user_details['uid']; ?>
-        </p>
-        <p>Name:
-            <?php echo $user_details['name']; ?>
-        </p>
-        <p>Email:
-            <?php echo $user_details['email']; ?>
-        </p>
-        <!-- Add other user details as needed -->
-    <?php else: ?>
-        <p>User details not found.</p>
-    <?php endif; ?>
+
+    <div id="content">
+        <?php if (isset($user_details)): ?>
+            <h2>User Details</h2>
+            <div class="user-detail">
+                <p>User ID: <?php echo $user_details['uid']; ?></p>
+            </div>
+            <div class="user-detail">
+                <p>Name: <?php echo $user_details['name']; ?></p>
+            </div>
+            <div class="user-detail">
+                <p>Email: <?php echo $user_details['email']; ?></p>
+            </div>
+            <!-- Add other user details as needed -->
+        <?php else: ?>
+            <p class="not-found">User details not found.</p>
+        <?php endif; ?>
+    </div>
+
 </body>
 
 </html>
