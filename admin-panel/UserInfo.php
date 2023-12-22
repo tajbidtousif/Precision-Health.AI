@@ -228,8 +228,8 @@ $conn->close();
 
         /* SIDEBAR */
 
-        .delete-button {
-            background-color: var(--red);
+        .details-button {
+            background-color: #4caf50;
             color: white;
             border: none;
             padding: 8px 12px;
@@ -237,9 +237,8 @@ $conn->close();
             cursor: pointer;
         }
 
-
-        .delete-button:hover {
-            background-color: #FF5A55;
+        .details-button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -310,11 +309,6 @@ $conn->close();
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Password</th>
-                    <th>Signup Time</th>
-                    <th>OTP</th>
-                    <th>Activation Code</th>
-                    <th>Reset Code</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -325,19 +319,16 @@ $conn->close();
                         echo "<td>{$row['uid']}</td>";
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
-                        echo "<td>{$row['password']}</td>";
-                        echo "<td>{$row['signup_time']}</td>";
-                        echo "<td>{$row['otp']}</td>";
-                        echo "<td>{$row['activation_code']}</td>";
-                        echo "<td>{$row['reset_code']}</td>";
                         echo "<td>{$row['status']}</td>";
 
-                        // Delete button here (Checked by author: Tousif)
+                        // Details button here (Checked by author: Backend Dev: Tousif)
                 
-                        echo "<td><form method='post' action='delete_user.php'>";
+
+                        echo "<td><form method='post' action='user_details.php'>";
                         echo "<input type='hidden' name='user_id' value='{$row['uid']}'>";
-                        echo "<button type='submit' class='delete-button' onclick='return confirm(\"Are you sure you want to delete this user?\")'>Delete</button>";
+                        echo "<button type='submit' class='details-button'>Details</button>";
                         echo "</form></td>";
+
                     }
                 } else {
                     echo "<tr><td colspan='10'>No users found</td></tr>";
