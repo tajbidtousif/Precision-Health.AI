@@ -57,20 +57,29 @@ include('Sidebar.php');
             padding: 0;
             font-family: 'Poppins', sans-serif;
             background-color: var(--grey);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
 
         #content {
-            margin: 20px auto;
+            font-size: 20px;
+            position: absolute;
             padding: 20px;
-            width: 80%;
+            width: 30%;
             background-color: var(--light);
             border: 1px solid var(--dark-grey);
             border-radius: 8px;
             text-align: center;
+            cursor: pointer;
+            left: 35%;
+            box-shadow: 0 0 300px rgba(0, 0, 0, 0.1);
+
         }
 
-        h2 {
-            color: var(--blue);
+        strong {
+            font-weight: bold;
         }
     </style>
 </head>
@@ -78,21 +87,19 @@ include('Sidebar.php');
 <body>
 
     <div id="content">
-
-        <h2>User Details</h2>
         <?php
-
         if (isset($user_details)) {
-            echo "<p>User ID: {$user_details['uid']}</p>";
-            echo "<p>Name: {$user_details['name']}</p>";
-            echo "<p>Email: {$user_details['email']}</p>";
-            echo "<p>Status: {$user_details['status']}</p>";
-            // Add more details as needed
+            echo "<p><strong>User ID:</strong> {$user_details['uid']}</p>";
+            echo "<p><strong>Name:</strong> {$user_details['name']}</p>";
+            echo "<p><strong>Email:</strong> {$user_details['email']}</p>";
+            echo "<p><strong>Status:</strong> {$user_details['status']}</p>";
+
         } else {
             echo "<p>No user details found.</p>";
         }
         ?>
     </div>
+
 </body>
 
 </html>
