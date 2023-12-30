@@ -72,7 +72,7 @@ include('Sidebar.php');
             border: 1px solid var(--dark-grey);
             border-radius: 8px;
             text-align: center;
-            cursor: pointer;
+            cursor: default;
             left: 35%;
             box-shadow: 0 0 300px rgba(0, 0, 0, 0.1);
 
@@ -80,6 +80,38 @@ include('Sidebar.php');
 
         strong {
             font-weight: bold;
+        }
+
+        #reportButton {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 15px;
+        }
+
+        #reportFieldContainer {
+            display: none;
+            margin-top: 15px;
+        }
+
+        #reportField {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        #doneButton {
+            background-color: green;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -94,11 +126,28 @@ include('Sidebar.php');
             echo "<p><strong>Email:</strong> {$user_details['email']}</p>";
             echo "<p><strong>Status:</strong> {$user_details['status']}</p>";
 
+            //  report button
+            echo '<button id="reportButton" onclick="showReportField()">Report</button>';
+            //  report field and done button
+            echo '<div id="reportFieldContainer">';
+            echo '<textarea id="reportField" placeholder="Enter your report"></textarea>';
+            echo '<button id="doneButton" onclick="hideReportField()">Deactivate</button>';
+            echo '</div>';
         } else {
             echo "<p>No user details found.</p>";
         }
         ?>
     </div>
+
+    <script>
+        function showReportField() {
+            document.getElementById("reportFieldContainer").style.display = "block";
+        }
+
+        function hideReportField() {
+            document.getElementById("reportFieldContainer").style.display = "none";
+        }
+    </script>
 
 </body>
 
