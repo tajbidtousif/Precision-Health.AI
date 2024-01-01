@@ -23,7 +23,7 @@ if (!empty($user_id)) {
     if ($result && mysqli_num_rows($result) > 0) {
         $user_details = mysqli_fetch_assoc($result);
     } else {
-         "Error fetching user details: " . mysqli_error($conn);
+        die("Error fetching user details: " . mysqli_error($conn));
     }
 }
 
@@ -55,10 +55,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
                 $delete_sql = "DELETE FROM user WHERE uid = $user_id";
 
                 if (mysqli_query($conn, $delete_sql)) {
-                     "User deleted from the original database successfully.";
+                    // echo "User deleted from the original database successfully.";
 
                     // Show success message using JavaScript
                     echo '<script>alert("User reported and moved to violated_user database successfully.");</script>';
+
+                    // Redirect to UserInfo.php
+                    header("Location: UserInfo.php");
+                    exit();
                 } else {
                     echo '<script>alert("Error deleting user from the original database: ");</script>';
                     // echo "Error deleting user from the original database: " . mysqli_error($conn);
@@ -76,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
     if ($submit_action === 'deactivate_user') {
         // Handle deactivation logic
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
-         //echo "User deactivated successfully. Reason: $reason";
+        // echo "User deactivated successfully. Reason: $reason";
     }
 }
 include('Sidebar.php');
