@@ -10,26 +10,81 @@ if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_id = $_POST['user_id'];
+$user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
 
+echo "User ID: " . $user_id;
+
+$user_details = [];
+
+if (!empty($user_id)) {
     $sql = "SELECT * FROM user WHERE uid = $user_id";
     $result = mysqli_query($conn, $sql);
 
-    if ($result) {
+    if ($result && mysqli_num_rows($result) > 0) {
         $user_details = mysqli_fetch_assoc($result);
     } else {
         echo "Error fetching user details: " . mysqli_error($conn);
     }
-
-    mysqli_close($conn);
 }
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
+    $submit_action = $_POST['submit_action'];
+
+    if ($submit_action === 'report_user') {
+        // Handle reporting logic
+        $reason = mysqli_real_escape_string($conn, $_POST['reason']);
+
+        // Check if the reason is not empty
+        if (!empty($reason)) {
+            // Move the user to the "violated_user" database
+            $violated_conn = mysqli_connect($servername, $username, $password, "violated_user");
+
+            if (!$violated_conn) {
+                die("Connection to violated_user failed: " . mysqli_connect_error());
+            }
+
+            // Insert the user into "violated_user" database
+            $insert_sql = "INSERT INTO user (name, email, ReasonForDeactivating, status) 
+                           VALUES ('{$user_details['name']}', '{$user_details['email']}', '$reason', 'Deactivated')";
+
+            if (mysqli_query($violated_conn, $insert_sql)) {
+                // User moved to "violated_user" successfully
+                echo "User reported and moved to violated_user database successfully.";
+
+                // Delete the user from the original database
+                $delete_sql = "DELETE FROM user WHERE uid = $user_id";
+
+                if (mysqli_query($conn, $delete_sql)) {
+                    echo "User deleted from the original database successfully.";
+                } else {
+                    echo "Error deleting user from the original database: " . mysqli_error($conn);
+                }
+            } else {
+                echo "Error moving user to violated_user database: " . mysqli_error($violated_conn);
+            }
+
+            mysqli_close($violated_conn);
+        } else {
+            echo "Please enter a reason.";
+        }
+    }
+
+    if ($submit_action === 'deactivate_user') {
+        // Handle deactivation logic
+        $reason = mysqli_real_escape_string($conn, $_POST['reason']);
+        echo "User deactivated successfully. Reason: $reason";
+    }
+}
+include('Sidebar.php');
+?>
+
 
 include('Sidebar.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 
 <head>
     <meta charset="UTF-8">
@@ -120,33 +175,64 @@ include('Sidebar.php');
 
     <div id="content">
         <?php
-        if (isset($user_details)) {
+        if (!empty($user_details)) {
             echo "<p><strong>User ID:</strong> {$user_details['uid']}</p>";
             echo "<p><strong>Name:</strong> {$user_details['name']}</p>";
             echo "<p><strong>Email:</strong> {$user_details['email']}</p>";
             echo "<p><strong>Status:</strong> {$user_details['status']}</p>";
 
-            //  report button
+            // Report button
             echo '<button id="reportButton" onclick="showReportField()">Report</button>';
-            //  report field and done button
-            echo '<div id="reportFieldContainer">';
-            echo '<textarea id="reportField" placeholder="Enter your report"></textarea>';
-            echo '<button id="doneButton" onclick="hideReportField()">Deactivate</button>';
+            // Report field and done button
+            echo '<form method="post" action="">';
+            echo '<div id="reportFieldContainer" style="display:none;">';
+            echo '<textarea name="reason" id="reportField" placeholder="Enter your report" required></textarea>';
+            echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
+            echo '<button type="submit" name="submit_action" value="report_user">Submit Report</button>';
             echo '</div>';
+            echo '</form>';
+
+            // Deactivate button
+            echo '<form method="post" action="">';
+            echo '<div id="deactivateButtonContainer" style="display:none;">';
+            echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
+            echo '<button type="submit" name="deactivate_user">Deactivate</button>';
+            echo '</div>';
+            echo '</form>';
+
+            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
+                $submit_action = $_POST['submit_action'];
+
+                if ($submit_action === 'report_user') {
+                    // Handle reporting logic
+                    echo "User reported. Please enter a reason.";
+                    echo '<script>document.getElementById("reportFieldContainer").style.display = "block";</script>';
+                }
+
+                if ($submit_action === 'deactivate_user') {
+                    $reason = mysqli_real_escape_string($conn, $_POST['reason']);
+                    // Handle deactivation logic
+                    echo "User deactivated successfully. Reason: $reason";
+                }
+            }
+
         } else {
-            echo "<p>No user details found.</p>";
+            echo "<p>No user details found. </p>";
         }
         ?>
     </div>
 
     <script>
         function showReportField() {
-            document.getElementById("reportFieldContainer").style.display = "block";
+            var reportFieldContainer = document.getElementById("reportFieldContainer");
+            reportFieldContainer.style.display = "block";
+
+            // Add the following line to hide the field after 5 seconds (adjust the time as needed)
+            setTimeout(function () {
+                reportFieldContainer.style.display = "none";
+            }, 5000);
         }
 
-        function hideReportField() {
-            document.getElementById("reportFieldContainer").style.display = "none";
-        }
     </script>
 
 </body>

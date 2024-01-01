@@ -4,9 +4,8 @@ $username = "root";
 $password = "";
 $dbname = "otp_verification";
 
-// Created connection
-$conn = mysqli_connect("localhost", "root", "", "otp_verification");
-// Checked connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
@@ -15,8 +14,7 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM user";
 $result = $conn->query($sql);
 
-// Closing the connection
-$conn->close();
+// Don't close the connection here
 
 include('Sidebar.php');
 ?>
@@ -120,11 +118,7 @@ include('Sidebar.php');
         }
     </style>
 </head>
-
-
 <body>
-
-   
 
     <div id="user-info" class="section">
         <div id="content">
@@ -147,13 +141,12 @@ include('Sidebar.php');
                         echo "<td>{$row['status']}</td>";
 
                         // Details button here (Checked by author: Backend Dev: Tousif)
-                
-
-                        echo "<td><form method='post' action='User_details.php'>";
-                        echo "<input type='hidden' name='user_id' value='{$row['uid']}'>";
-                        echo "<button type='submit' class='details-button'>Details</button>";
-                        echo "</form></td>";
-
+                        echo "<td>
+        <form method=\"post\" action=\"User_details.php\">
+            <input type=\"hidden\" name=\"user_id\" value=\"{$row['uid']}\">
+            <button type=\"submit\" class=\"details-button\">Details</button>
+        </form>
+    </td>";
                     }
                 } else {
                     echo "<tr><td colspan='10'>No users found</td></tr>";
