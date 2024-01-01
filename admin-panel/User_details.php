@@ -12,7 +12,7 @@ if (!$conn) {
 
 $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
 
-echo "User ID: " . $user_id;
+// echo "User ID: " . $user_id;
 
 $user_details = [];
 
@@ -23,7 +23,7 @@ if (!empty($user_id)) {
     if ($result && mysqli_num_rows($result) > 0) {
         $user_details = mysqli_fetch_assoc($result);
     } else {
-        echo "Error fetching user details: " . mysqli_error($conn);
+         "Error fetching user details: " . mysqli_error($conn);
     }
 }
 
@@ -49,15 +49,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
 
             if (mysqli_query($violated_conn, $insert_sql)) {
                 // User moved to "violated_user" successfully
-                echo "User reported and moved to violated_user database successfully.";
+                // echo "User reported and moved to violated_user database successfully.";
 
                 // Delete the user from the original database
                 $delete_sql = "DELETE FROM user WHERE uid = $user_id";
 
                 if (mysqli_query($conn, $delete_sql)) {
-                    echo "User deleted from the original database successfully.";
+                     "User deleted from the original database successfully.";
+
+                    // Show success message using JavaScript
+                    echo '<script>alert("User reported and moved to violated_user database successfully.");</script>';
                 } else {
-                    echo "Error deleting user from the original database: " . mysqli_error($conn);
+                    echo '<script>alert("Error deleting user from the original database: ");</script>';
+                    // echo "Error deleting user from the original database: " . mysqli_error($conn);
                 }
             } else {
                 echo "Error moving user to violated_user database: " . mysqli_error($violated_conn);
@@ -72,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
     if ($submit_action === 'deactivate_user') {
         // Handle deactivation logic
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
-        echo "User deactivated successfully. Reason: $reason";
+         //echo "User deactivated successfully. Reason: $reason";
     }
 }
 include('Sidebar.php');
@@ -205,7 +209,7 @@ include('Sidebar.php');
 
                 if ($submit_action === 'report_user') {
                     // Handle reporting logic
-                    echo "User reported. Please enter a reason.";
+                    //echo "User reported. Please enter a reason.";
                     echo '<script>document.getElementById("reportFieldContainer").style.display = "block";</script>';
                 }
 
