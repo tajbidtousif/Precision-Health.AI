@@ -191,12 +191,13 @@ include('Sidebar.php');
 
             // Report button
             echo '<button id="reportButton" onclick="showReportField()">Report</button>';
+
             // Report field and done button
             echo '<form method="post" action="">';
             echo '<div id="reportFieldContainer" style="display:none;">';
             echo '<textarea name="reason" id="reportField" placeholder="Enter your report" required></textarea>';
             echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
-            echo '<button type="submit" name="submit_action" value="report_user">Submit Report</button>';
+            echo '<button type="submit" name="submit_action" value="report_user" style="background-color: red; color: white;">Submit Report</button>';
             echo '</div>';
             echo '</form>';
 
@@ -235,7 +236,6 @@ include('Sidebar.php');
             var reportFieldContainer = document.getElementById("reportFieldContainer");
             reportFieldContainer.style.display = "block";
 
-            // Add the following line to hide the field after 5 seconds (adjust the time as needed)
             setTimeout(function () {
                 reportFieldContainer.style.display = "none";
             }, 5000);
