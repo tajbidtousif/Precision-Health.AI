@@ -34,6 +34,14 @@
                     <span class="text">Message</span>
                 </a>
             </li>
+
+            <li>
+                <a href="/Project-4800/admin-panel/reported_user.php">
+                    <i class='bx bxs-user-x'></i>
+                    <span class="text">Reported User</span>
+                </a>
+            </li>
+
             <li>
                 <a href="#">
                     <i class='bx bxs-group'></i>
