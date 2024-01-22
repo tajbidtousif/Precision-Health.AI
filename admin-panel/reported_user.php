@@ -14,10 +14,8 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM user";
 $result = $conn->query($sql);
 
-
 include('Sidebar.php');
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -127,6 +125,54 @@ include('Sidebar.php');
         .details-button:hover {
             background-color: #45a049;
         }
+
+        #reportedUserTable th,
+        #reportedUserTable td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        #reportedUserTable th {
+            background-color: var(--green);
+            color: white;
+        }
+
+        .category-button {
+            background-color: var(--green);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .category-button:hover {
+            background-color: #45a049;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 900;
+        }
     </style>
 </head>
 
@@ -140,7 +186,7 @@ include('Sidebar.php');
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>ReasonForDeactivating</th>
+                    <th>Categories</th>
                     <th>Signup Time</th>
                     <th>Status</th>
                 </tr>
@@ -151,7 +197,7 @@ include('Sidebar.php');
                         echo "<td>{$row['uid']}</td>";
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
-                        echo "<td>{$row['ReasonForDeactivating']}</td>";
+                        echo "<td><button class='category-button' onclick='showReason(\"{$row['uid']}\")'>{$row['Categories']}</button></td>";
                         echo "<td>{$row['signup_time']}</td>";
                         echo "<td>{$row['status']}</td>";
                         echo "</tr>";
@@ -163,6 +209,40 @@ include('Sidebar.php');
             </table>
         </div>
     </div>
+
+    <div id="reasonPopup" class="popup">
+        <span onclick="closePopup()" style="cursor: pointer; float: right;">&times;</span>
+        <h3>Reason For Deactivating</h3>
+        <p id="reasonText"></p>
+    </div>
+
+    <div id="popupOverlay" class="popup-overlay" onclick="closePopup()"></div>
+
+    <script>
+        function showReason(userId) {
+            // Fetch the reason from the database using AJAX
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var reason = this.responseText;
+                    document.getElementById("reasonText").innerHTML = reason;
+                    openPopup();
+                }
+            };
+            xmlhttp.open("GET", "getReason.php?userId=" + userId, true);
+            xmlhttp.send();
+        }
+
+        function openPopup() {
+            document.getElementById("reasonPopup").style.display = "block";
+            document.getElementById("popupOverlay").style.display = "block";
+        }
+
+        function closePopup() {
+            document.getElementById("reasonPopup").style.display = "none";
+            document.getElementById("popupOverlay").style.display = "none";
+        }
+    </script>
 
 </body>
 

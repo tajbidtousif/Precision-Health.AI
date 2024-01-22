@@ -32,10 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
 
     if ($submit_action === 'report_user') {
         // Handle reporting logic
+        $category = mysqli_real_escape_string($conn, $_POST['category']); // Capture Categories value
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
 
-        // Check if the reason is not empty
-        if (!empty($reason)) {
+        // Check if both category and reason are not empty
+        if (!empty($category) && !empty($reason)) {
             // Move the user to the "violated_user" database
             $violated_conn = mysqli_connect($servername, $username, $password, "violated_user");
 
@@ -43,20 +44,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
                 die("Connection to violated_user failed: " . mysqli_connect_error());
             }
 
-            // Insert the user into "violated_user" database
-            $insert_sql = "INSERT INTO user (name, email, ReasonForDeactivating, status) 
-                           VALUES ('{$user_details['name']}', '{$user_details['email']}', '$reason', 'Deactivated')";
+            // Insert the user into "violated_user" database with Categories value
+            $insert_sql = "INSERT INTO user (name, email, Categories, ReasonForDeactivating, status) 
+                           VALUES ('{$user_details['name']}', '{$user_details['email']}', '$category', '$reason', 'Deactivated')";
 
             if (mysqli_query($violated_conn, $insert_sql)) {
                 // User moved to "violated_user" successfully
-                // echo "User reported and moved to violated_user database successfully.";
 
                 // Delete the user from the original database
                 $delete_sql = "DELETE FROM user WHERE uid = $user_id";
 
                 if (mysqli_query($conn, $delete_sql)) {
-                    // echo "User deleted from the original database successfully.";
-
                     // Show success message using JavaScript
                     echo '<script>alert("User reported and moved to violated_user database successfully.");</script>';
 
@@ -65,7 +63,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
                     exit();
                 } else {
                     echo '<script>alert("Error deleting user from the original database: ");</script>';
-                    // echo "Error deleting user from the original database: " . mysqli_error($conn);
                 }
             } else {
                 echo "Error moving user to violated_user database: " . mysqli_error($violated_conn);
@@ -73,26 +70,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
 
             mysqli_close($violated_conn);
         } else {
-            echo "Please enter a reason.";
+            echo "Please select a category and enter a reason.";
         }
-    }
-
-    if ($submit_action === 'deactivate_user') {
+    } elseif ($submit_action === 'deactivate_user') {
         // Handle deactivation logic
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
         // echo "User deactivated successfully. Reason: $reason";
     }
 }
-include('Sidebar.php');
-?>
-
 
 include('Sidebar.php');
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 
 <head>
     <meta charset="UTF-8">
@@ -189,42 +180,19 @@ include('Sidebar.php');
             echo "<p><strong>Email:</strong> {$user_details['email']}</p>";
             echo "<p><strong>Status:</strong> {$user_details['status']}</p>";
 
-            // Report button
-            echo '<button id="reportButton" onclick="showReportField()">Report</button>';
+            echo '<button id="reportButton">Report</button>';
 
-            // Report field and done button
-            echo '<form method="post" action="">';
-            echo '<div id="reportFieldContainer" style="display:none;">';
+            echo '<form method="post" action="user_details.php" id="reportForm">';
+            echo '<div id="reportFieldContainer">';
+            echo '<select name="category" id="categoryField" style="margin-top: 10px;">';
+            echo '<option value="Cyber Violence">Cyber Violence Report</option>';
+            echo '<option value="Spamming Violence">Spamming Violence Report</option>';
+            echo '</select>';
             echo '<textarea name="reason" id="reportField" placeholder="Enter your report" required></textarea>';
             echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
-            echo '<button type="submit" name="submit_action" value="report_user" style="background-color: red; color: white;">Submit Report</button>';
+            echo '<button type="submit" name="submit_action" value="report_user" id="doneButton">Submit Report</button>';
             echo '</div>';
             echo '</form>';
-
-            // Deactivate button
-            echo '<form method="post" action="">';
-            echo '<div id="deactivateButtonContainer" style="display:none;">';
-            echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
-            echo '<button type="submit" name="deactivate_user">Deactivate</button>';
-            echo '</div>';
-            echo '</form>';
-
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
-                $submit_action = $_POST['submit_action'];
-
-                if ($submit_action === 'report_user') {
-                    // Handle reporting logic
-                    //echo "User reported. Please enter a reason.";
-                    echo '<script>document.getElementById("reportFieldContainer").style.display = "block";</script>';
-                }
-
-                if ($submit_action === 'deactivate_user') {
-                    $reason = mysqli_real_escape_string($conn, $_POST['reason']);
-                    // Handle deactivation logic
-                    echo "User deactivated successfully. Reason: $reason";
-                }
-            }
-
         } else {
             echo "<p>No user details found. </p>";
         }
@@ -232,15 +200,10 @@ include('Sidebar.php');
     </div>
 
     <script>
-        function showReportField() {
+        document.getElementById("reportButton").addEventListener("click", function () {
             var reportFieldContainer = document.getElementById("reportFieldContainer");
             reportFieldContainer.style.display = "block";
-
-            setTimeout(function () {
-                reportFieldContainer.style.display = "none";
-            }, 5000);
-        }
-
+        });
     </script>
 
 </body>
