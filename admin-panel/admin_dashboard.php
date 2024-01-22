@@ -1,4 +1,10 @@
 <?php
+session_start();
+
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: /Project-4800/index.php"); // Change the path if needed
+    exit();
+}
 
 $servername = "localhost";
 $username = "root";

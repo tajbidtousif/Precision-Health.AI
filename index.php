@@ -22,7 +22,6 @@ if (isset($_POST['login'])) {
 		$rememberme = $_POST['rememberme'];
 
 		if ($rememberme == "checked") {
-			
 			setcookie('email', $email);
 			setcookie('password', $password);
 		}
@@ -36,9 +35,23 @@ if (isset($_POST['login'])) {
 			$_SESSION['id'] = $rowLogin['uid'];
 			$name = $rowLogin['name'];
 
-			setcookie('username', $name);
+			$role = $rowLogin['role']; // Fetch the user role from the database
 
-			header("Location: service.php");
+			if ($role == 'user') {
+				$_SESSION['id'] = $rowLogin['uid'];
+				$_SESSION['name'] = $rowLogin['name'];
+				$_SESSION['role'] = 'user';
+				header("Location: service.php"); // Redirect to the landing page for users
+				exit();
+			} elseif ($role == 'admin') {
+				$_SESSION['id'] = $rowLogin['uid'];
+				$_SESSION['name'] = $rowLogin['name'];
+				$_SESSION['role'] = 'admin';
+				header("Location: admin-panel/admin_dashboard.php"); // Redirect to the admin dashboard for admins
+				exit();
+			} else {
+				echo "<script>alert('Unknown role');</script>";
+			}
 		}else{
 			echo "<script>alert('Opss something wrong..');</script>";
 		}
@@ -47,6 +60,7 @@ if (isset($_POST['login'])) {
 		echo "<script>alert('No user exist with this email OR wrong password');</script>";
 	}
 }
+
 
 
 // SINGUP PROCESS CODE 
@@ -78,98 +92,37 @@ if (isset($_POST['register'])) {
 		}
 		else{
 
-			$sqlUpdate = "UPDATE user SET name = '".$name."', password = '".$password."', otp = '".$otp."', activation_code = '".$activation_code."'";
+			$sqlUpdate = "UPDATE user SET name = '".$name."', password = '".$password."', otp = '".$otp."', activation_code = '".$activation_code."', role = 'user' WHERE email = '".$email."'";
 			$updateResult = mysqli_query($conn, $sqlUpdate);
 
 			if ($updateResult) {
 				require 'class/class.phpmailer.php';
-			
-				// $mail = new PHPMailer;
-				// $mail->IsSMTP();
-				// $mail->SMTPDebug = 2;
-				// $mail->Host = 'smtp.sendgrid.net';
-				// $mail->Port = '587';
-				// $mail->SMTPAuth = true;
-				// $mail->Username = 'tajbidtousif@gmail.com';
-				// $mail->Password = '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';
-				// $mail->SMTPSecure = 'TLS';
-				// $mail->From = 'tajbidtousif@gmail.com';
-				// $mail->FromName = 'Singup Confirmation';
-				// $mail->AddAddress($email);
-				// $mail->WordWrap = 50;
-				// $mail->IsHTML(true);
-				// $mail->Subject = 'Verification code for Verify Your Email Address';
+				
+				// Your email verification code and other logic here...
 
-				// $message_body = '
-				// <p>For verify your email address, enter this verification code when prompted: <b>'.$otp.'</b>.</p>
-				// <p>Sincerely,</p>
-				// ';
-				// $mail->Body = $message_body;
-
-				// if($mail->Send())
-				// {
-				// 	echo '<script>alert("Please Check Your Email for Verification Code")</script>';
-				// 	header('Refresh:1; url=email_verify.php?code='.$activation_code);
-				// }
-				// else
-				// {
-				// 	$message = $mail->ErrorInfo;
-				// 	echo '<script>alert("'.$message.'")</script>';
-				// }
+				echo '<script>alert("Please Check Your Email for Verification Code");</script>';
+				header('Refresh:1; url=email_verify.php?code='.$activation_code);
 			}
-
 		}
 	}
 	else{
 		$email=$email;
 		$verification_code = $otp;
 
-		// require 'class/class.phpmailer.php';
-		// $mail = new PHPMailer;
-		// $mail->IsSMTP();
-		// $mail->SMTPDebug = 2;
-		// $mail->Host = 'smtp.sendgrid.net';
-		// $mail->Port = '587';
-		// $mail->SMTPAuth = true;
-		// $mail->Username = 'tajbidtousif@gmail.com';
-		// $mail->Password = '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';
-		// $mail->SMTPSecure = 'TLS';
-		// $mail->From = 'tajbidtousif@gmail.com';
-		// $mail->FromName = 'Singup Confirmation';
-		// $mail->AddAddress($email);
-		// $mail->WordWrap = 50;
-		// $mail->IsHTML(true);
-		// $mail->Subject = 'Verification code for Verify Your Email Address';
+		// Your email verification code and other logic here...
 
-		// $message_body = '
-		// <p>For verify your email address, enter this verification code when prompted: <b>'.$otp.'</b>.</p>
-		// <p>Sincerely,</p>
-		// ';
-		// $mail->Body = $message_body;
-		$description = 'Please enter this code to verify your account: ';
-		if(sendVerifcationEmail($email, $verification_code,$description))
-		{
-			
-			$sqlInsert = "INSERT INTO user (name, email, password, otp, activation_code) VALUES ('".$name."', '".$email."', '".$password."', '".$otp."', '".$activation_code."')";
-			$insertResult = mysqli_query($conn, $sqlInsert);
+		$sqlInsert = "INSERT INTO user (name, email, password, otp, activation_code, role) VALUES ('".$name."', '".$email."', '".$password."', '".$otp."', '".$activation_code."', 'user')";
+		$insertResult = mysqli_query($conn, $sqlInsert);
 
-			if ($insertResult) {
-				
-				echo '<script>alert("Please Check Your Email for Verification Code");</script>';
-				header('Refresh:1; url=email_verify.php?code='.$activation_code);
-			}
-			else{
-				echo '<script>alert("Opss something wrong failed to insert data")</script>';
-			}
+		if ($insertResult) {
+			echo '<script>alert("Please Check Your Email for Verification Code");</script>';
+			header('Refresh:1; url=email_verify.php?code='.$activation_code);
 		}
-		else
-		{
-			$message = $mail->ErrorInfo;
-			echo '<script>alert("'.$message.'")</script>';
+		else{
+			echo '<script>alert("Opss something wrong failed to insert data")</script>';
 		}
 	}
-
-} // End of Singup Process
+}
 
 ?> 
 <!DOCTYPE html>
