@@ -10,8 +10,8 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetched reported user data
-$sql = "SELECT * FROM user";
+// Fetched reported user data for users with role 'user'
+$sql = "SELECT * FROM user WHERE role = 'user'";
 $result = $conn->query($sql);
 
 include('Sidebar.php');

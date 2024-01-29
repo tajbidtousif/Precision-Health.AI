@@ -17,7 +17,7 @@ $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
 $user_details = [];
 
 if (!empty($user_id)) {
-    $sql = "SELECT * FROM user WHERE uid = $user_id";
+    $sql = "SELECT * FROM user WHERE uid = $user_id AND (role = 'user' OR role = 'admin')";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
                     echo '<script>alert("User reported and moved to violated_user database successfully.");</script>';
 
                     // Redirect to UserInfo.php
-                    header("Location: UserInfo.php");
+                    header("Location: superAdmin.php");
                     exit();
                 } else {
                     echo '<script>alert("Error deleting user from the original database: ");</script>';
@@ -79,7 +79,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
     }
 }
 
-include('Sidebar.php');
+include('superAdminSidebar.php');
+?>
+
+include('superAdminSidebar.php');
 ?>
 
 <!DOCTYPE html>
@@ -115,6 +118,7 @@ include('Sidebar.php');
             align-items: center;
             justify-content: center;
             height: 100vh;
+            background-color: #1b203d;
         }
 
         #content {
@@ -122,13 +126,13 @@ include('Sidebar.php');
             position: absolute;
             padding: 20px;
             width: 30%;
-            background-color: var(--light);
+            background-color: #1b203d;
             border: 1px solid var(--dark-grey);
             border-radius: 8px;
             text-align: center;
             cursor: default;
             left: 35%;
-            box-shadow: 0 0 300px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 300px rgba(0, 0, 0, 0.5);
 
         }
 
@@ -166,6 +170,10 @@ include('Sidebar.php');
             border-radius: 5px;
             cursor: pointer;
             margin-top: 10px;
+        }
+
+        p {
+            color: white;
         }
     </style>
 </head>

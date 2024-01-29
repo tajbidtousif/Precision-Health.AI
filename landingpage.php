@@ -39,6 +39,7 @@ if (!isset($_SESSION['id'])) {
             background-size: cover;
             z-index: 9999;
         }
+ 
 
         
         .hide-splash-screen {
@@ -206,6 +207,7 @@ if (!isset($_SESSION['id'])) {
         
 
 /* Typing Animation */
+
 @keyframes typing {
   from {
     width: 0; 

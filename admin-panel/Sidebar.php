@@ -25,13 +25,13 @@
             <li>
                 <a href="/Project-4800/admin-panel/UserInfo.php">
                     <i class='bx bxs-shopping-bag-alt'></i>
-                    <span class="text">UserInfo</span>
+                    <span class="text">User Info</span>
                 </a>
             </li>
             <li>
-                <a href="#">
-                    <i class='bx bxs-message-dots'></i>
-                    <span class="text">Message</span>
+                <a href="/Project-4800/admin-panel/adminInfo.php">
+                    <i class='bx bx-user-circle'></i>
+                    <span class="text">Admin Info</span>
                 </a>
             </li>
 

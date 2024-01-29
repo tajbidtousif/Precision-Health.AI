@@ -19,7 +19,8 @@ if (isset($_POST['login'])) {
 
 	if (mysqli_num_rows($resultLogin) > 0) {
 
-		$rememberme = $_POST['rememberme'];
+		// Check if 'rememberme' is set in $_POST array
+		$rememberme = isset($_POST['rememberme']) ? $_POST['rememberme'] : '';
 
 		if ($rememberme == "checked") {
 			setcookie('email', $email);

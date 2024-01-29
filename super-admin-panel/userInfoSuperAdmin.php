@@ -37,7 +37,7 @@ $total_pages = ceil($total_records / $records_per_page);
 
 // Don't close the connection here
 
-include('sidebar.php');
+include('superAdminSidebar.php');
 ?>
 
 <!DOCTYPE html>
@@ -48,28 +48,11 @@ include('sidebar.php');
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        :root {
-            --poppins: 'Poppins', sans-serif;
-            --lato: 'Lato', sans-serif;
-
-            --light: #F9F9F9;
-            --blue: #3C91E6;
-            --light-blue: #CFE8FF;
-            --grey: #eee;
-            --dark-grey: #AAAAAA;
-            --dark: #342E37;
-            --red: #DB504A;
-            --yellow: #FFCE26;
-            --light-yellow: #FFF2C6;
-            --orange: #FD7238;
-            --light-orange: #FFE0D3;
-        }
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #eee;
+            background-color: #1b203d;
         }
 
         #content {
@@ -78,7 +61,7 @@ include('sidebar.php');
         }
 
         h2 {
-            color: #4CAF50;
+            color: #fff;
             margin-left: 30px;
             margin-bottom: 20px;
             margin-top: 100px;
@@ -88,15 +71,14 @@ include('sidebar.php');
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #gray;
+            background-color: #1b203d;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
-        th,
-        td {
+        th, td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid black;
+            border-bottom: 1px solid #ddd;
         }
 
         th {
@@ -105,11 +87,11 @@ include('sidebar.php');
         }
 
         tr:hover {
-            background-color: #AAAAAA;
+            background-color: #004080;
         }
 
-        td {
-            color: black;
+        td{
+            color: white;
         }
 
         .details-button {
@@ -181,9 +163,10 @@ include('sidebar.php');
             </table>
 
             <!-- Pagination checked by dev Tousif -->
-            <div style="margin-top: 20px; padding: 10px;  background-color: ; display: inline-block;">
+            <div
+                style="margin-top: 20px; padding: 10px;  background-color: ; display: inline-block;">
                 <span
-                    style="font-size: 16px; margin-right: 10px; padding: 8px; border: 1px solid #4caf50; border-radius: 4px; color:black">Page:</span>
+                    style="font-size: 16px; margin-right: 10px; padding: 8px; border: 1px solid #4caf50; border-radius: 4px; color:white">Page:</span>
                 <?php
                 // Display pagination links
                 for ($page = 1; $page <= $total_pages; $page++) {
@@ -196,3 +179,5 @@ include('sidebar.php');
 </body>
 
 </html>
+
+
