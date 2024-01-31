@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 $sql = "SELECT * FROM user WHERE role = 'user'";
 $result = $conn->query($sql);
 
-include('Sidebar.php');
+include('superAdminSidebar.php');
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +56,7 @@ include('Sidebar.php');
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #eee;
+            background-color: #1b203d;
         }
 
         #user-info {
@@ -74,18 +74,16 @@ include('Sidebar.php');
         }
 
         h2 {
-            color: #4CAF50;
+            color: #fff;
             margin-left: 30px;
             margin-bottom: 20px;
-            margin-top: 100px;
+            
         }
 
         #reportedUserTable {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #gray;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         #reportedUserTable th,
@@ -113,6 +111,18 @@ include('Sidebar.php');
             background-color: #45a049;
         }
 
+        #reportedUserTable th,
+        #reportedUserTable td {
+             border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            color: white; 
+        }
+
+        #reportedUserTable th {
+            background-color: var(--green);
+            color: white;
+        }
 
         .category-button {
             background-color: var(--green);

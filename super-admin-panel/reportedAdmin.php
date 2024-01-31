@@ -99,6 +99,7 @@ $result = mysqli_query($conn_otp, $sql);
             border-bottom: 1px solid #ddd;
             background-color: #1b203d;
             color: white;
+            border: 1px solid #ddd;
         }
 
         th {

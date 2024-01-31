@@ -65,20 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Admin Information</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        li {
-            list-style: none;
-        }
-
         :root {
             --poppins: 'Poppins', sans-serif;
             --lato: 'Lato', sans-serif;
@@ -96,50 +82,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             --light-orange: #FFE0D3;
         }
 
-        html {
-            overflow-x: hidden;
-        }
-
-        body.dark {
-            --light: #0C0C1E;
-            --grey: #060714;
-            --dark: #FBFBFB;
-        }
-
         body {
-            background: var(--grey);
-            overflow-x: hidden;
-        }
-
-        #userTable {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        #userTable th,
-        #userTable td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-
-        #userTable th {
-            background-color: #4caf50;
-            color: white;
-        }
-
-        #user-info {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #eee;
         }
 
         #content {
             margin-left: 280px;
+            padding: 20px;
         }
 
+        h2 {
+            color: #4CAF50;
+            margin-left: 30px;
+            margin-bottom: 20px;
+            margin-top: 100px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #gray;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        th,
+        td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #AAAAAA;
+        }
+
+        td {
+            color: black;
+        }
 
         .details-button {
             background-color: #4caf50;
@@ -154,19 +142,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             background-color: #45a049;
         }
 
-        .report-button {
+        .action-button {
             background-color: #4caf50;
-            /* Green color */
             color: white;
             border: none;
-            padding: 8px 12px;
+            padding: 8px 16px;
             border-radius: 4px;
             cursor: pointer;
         }
 
-        .report-button:hover {
+        .action-button:hover {
             background-color: #45a049;
-            /* Darker green color on hover */
         }
 
         /* Colorful Submit Button */
@@ -208,6 +194,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Role</th>
+                    <th>SignUp Time</th>
                     <th>Status</th>
                     <th>Actions</th>
                 </tr>
@@ -218,11 +206,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     echo "<td>{$row['uid']}</td>";
                     echo "<td>{$row['name']}</td>";
                     echo "<td>{$row['email']}</td>";
+                    echo "<td>{$row['role']}</td>";
+                    echo "<td>{$row['signup_time']}</td>";
                     echo "<td>{$row['status']}</td>";
                     echo "<td>
                 <form method=\"post\">
                     <input type=\"hidden\" name=\"uid\" value=\"{$row['uid']}\">
-                    <button type=\"button\" class=\"report-button\" onclick=\"toggleReportForm(this)\">Report</button>
+                    <button type=\"button\" class=\"details-button\" onclick=\"toggleReportForm(this)\">Report</button>
                     <div style=\"display:none;\">
                         <input type=\"text\" name=\"admin_report\" placeholder=\"Enter report\">
                         <button type=\"submit\" class=\"submit-button\">Submit</button>
@@ -255,8 +245,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 form.style.display = "block";
             } else {
                 form.style.display = "none";
+            }
         }
- }
     </script>
 </body>
 

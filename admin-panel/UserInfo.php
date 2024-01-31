@@ -96,7 +96,7 @@ include('sidebar.php');
         td {
             padding: 12px;
             text-align: left;
-            border-bottom: 1px solid black;
+            border: 1px solid #ddd;
         }
 
         th {

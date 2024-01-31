@@ -178,7 +178,7 @@ include("superAdminSidebar.php");
 <body>
     <div class="form-wrap">
         <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-            <h1>Create <span>Admin</span></h1>
+            <h1>Create <span/>Admin</span></h1>
             <input type="text" name="fullname" placeholder="Full Name">
             <span class="error">
                 <?php echo $fullname_err; ?>

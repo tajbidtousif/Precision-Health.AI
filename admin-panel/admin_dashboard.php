@@ -1,10 +1,10 @@
 <?php
-session_start();
+// session_start();
 
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: /Project-4800/index.php");
-    exit();
-}
+// if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+//     header("Location: /Project-4800/index.php");
+//     exit();
+// }
 
 $servername = "localhost";
 $username = "root";
