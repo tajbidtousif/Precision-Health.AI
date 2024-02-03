@@ -82,7 +82,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Attempt to execute the prepared statement
         if ($stmt->execute()) {
             // Redirect to success page or display success message
-            header("location: superAdmin.php");
+            header("location: superAdminDashboard.php");
             exit();
         } else {
             echo "Something went wrong. Please try again later.";

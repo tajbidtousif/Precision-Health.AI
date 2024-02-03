@@ -22,6 +22,14 @@
                     <span class="text">Dashboard</span>
                 </a>
             </li>
+
+            <li>
+                <a href="/Project-4800/admin-panel/createBlog.php">
+                    <i class='bx bx-pencil'></i>
+                    <span class="text">Create Blog</span>
+                </a>
+            </li>
+
             <li>
                 <a href="/Project-4800/admin-panel/UserInfo.php">
                     <i class='bx bxs-shopping-bag-alt'></i>

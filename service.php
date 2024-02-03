@@ -1,11 +1,15 @@
 <?php
-
 session_start(); 
 $isLoggedIn = false;
 
 if (isset($_SESSION['id'])) {
-    
     $isLoggedIn = true;
+}
+
+// Redirect to index.php if not logged in
+if (!$isLoggedIn) {
+    header("Location: index.php");
+    exit();
 }
 ?>
 
