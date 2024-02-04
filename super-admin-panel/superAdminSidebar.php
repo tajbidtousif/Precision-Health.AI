@@ -14,10 +14,11 @@
         <p class="logo"><span>Super</span>-Admin</p>
         <a href="/Project-4800/super-admin-panel/superAdminDashboard.php" class="icon-a"><i class="fa fa-dashboard icons"></i> Dashboard</a>
         <a href="/Project-4800/super-admin-panel/createAdmin.php" class="icon-a"><i class="fa fa-user-circle icons"></i> Create Admin</a>
-        <a href="/Project-4800/super-admin-panel/userInfo.php" class="icon-a"><i class="fa fa-users icons"></i> UserInfo</a>
+        <a href="/Project-4800/super-admin-panel/userInfo.php" class="icon-a"><i class="fa fa-users icons"></i> User Info</a>
         <a href="/Project-4800/super-admin-panel/adminInfo.php" class="icon-a"><i class="fa fa-list icons"></i> Admin Info</a>
         <a href="/Project-4800/super-admin-panel/violatedUser.php" class="icon-a"><i class="fa fa-exclamation-triangle"></i> Violated User</a>
         <a href="/Project-4800/super-admin-panel/reportedAdmin.php" class="icon-a"><i class="fa fa-exclamation-triangle"></i> Reported Admin</a>
+        <a href="/Project-4800/super-admin-panel/violatedAdmin.php" class="icon-a"><i class="fa fa-exclamation-triangle"></i> Violated Admin</a>
         <a href="#" class="icon-a"><i class="fa fa-power-off icons"></i> Log Out</a>
     </div>
 </body>

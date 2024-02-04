@@ -1,4 +1,17 @@
 <?php
+
+session_start();
+
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: /Project-4800/index.php");
+    exit();
+}
+
+// Set admin email in session if not already set (replace with actual admin email retrieval logic)
+if (!isset($_SESSION['admin_email'])) {
+    $_SESSION['admin_email'] = "admin@example.com"; // Replace with the actual admin's email
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -11,8 +24,6 @@ if (!$conn) {
 }
 
 $user_id = isset($_POST['user_id']) ? $_POST['user_id'] : null;
-
-// echo "User ID: " . $user_id;
 
 $user_details = [];
 
@@ -27,15 +38,13 @@ if (!empty($user_id)) {
     }
 }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
-    $submit_action = $_POST['submit_action'];
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_report'])) {
+    $submit_action = $_POST['submit_report'];
 
     if ($submit_action === 'report_user') {
-        // Handle reporting logic
-        $category = mysqli_real_escape_string($conn, $_POST['category']); // Capture Categories value
+        $category = mysqli_real_escape_string($conn, $_POST['category']);
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
 
-        // Check if both category and reason are not empty
         if (!empty($category) && !empty($reason)) {
             // Move the user to the "violated_user" database
             $violated_conn = mysqli_connect($servername, $username, $password, "violated_user");
@@ -45,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
             }
 
             // Insert the user into "violated_user" database with Categories value
-            $insert_sql = "INSERT INTO user (name, email, role, Categories, ReasonForDeactivating, status) 
-                           VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated')";
+            $insert_sql = "INSERT INTO user (name, email, role, Categories, ReasonForDeactivating, status, reportedBy) 
+            VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated', '{$_SESSION['id']}')";
 
             if (mysqli_query($violated_conn, $insert_sql)) {
                 // User moved to "violated_user" successfully
@@ -55,10 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
                 $delete_sql = "DELETE FROM user WHERE uid = $user_id";
 
                 if (mysqli_query($conn, $delete_sql)) {
-                    // Show success message using JavaScript
                     echo '<script>alert("User reported and moved to violated_user database successfully.");</script>';
-
-                    // Redirect to UserInfo.php
                     header("Location: UserInfo.php");
                     exit();
                 } else {
@@ -190,7 +196,7 @@ include('Sidebar.php');
             echo '</select>';
             echo '<textarea name="reason" id="reportField" placeholder="Enter your report" required></textarea>';
             echo '<input type="hidden" name="user_id" value="' . $user_id . '">';
-            echo '<button type="submit" name="submit_action" value="report_user" id="doneButton">Submit Report</button>';
+            echo '<button type="submit" name="submit_report" value="report_user" id="doneButton">Submit Report</button>';
             echo '</div>';
             echo '</form>';
         } else {

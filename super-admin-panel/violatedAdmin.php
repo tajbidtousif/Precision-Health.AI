@@ -1,12 +1,4 @@
 <?php
-
-session_start();
-
-if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: /Project-4800/index.php");
-    exit();
-}
-
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -19,10 +11,10 @@ if ($conn->connect_error) {
 }
 
 // Fetched reported user data for users with role 'user'
-$sql = "SELECT * FROM user WHERE role = 'user'";
+$sql = "SELECT * FROM user WHERE role = 'admin'";
 $result = $conn->query($sql);
 
-include('Sidebar.php');
+include('superAdminSidebar.php');
 ?>
 
 <!DOCTYPE html>
@@ -64,7 +56,7 @@ include('Sidebar.php');
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #eee;
+            background-color: #1b203d;
         }
 
         #user-info {
@@ -82,18 +74,16 @@ include('Sidebar.php');
         }
 
         h2 {
-            color: #4CAF50;
+            color: #fff;
             margin-left: 30px;
             margin-bottom: 20px;
-            margin-top: 100px;
+            
         }
 
         #reportedUserTable {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
-            background-color: #gray;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         }
 
         #reportedUserTable th,
@@ -121,6 +111,18 @@ include('Sidebar.php');
             background-color: #45a049;
         }
 
+        #reportedUserTable th,
+        #reportedUserTable td {
+             border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+            color: white; 
+        }
+
+        #reportedUserTable th {
+            background-color: var(--green);
+            color: white;
+        }
 
         .category-button {
             background-color: var(--green);
@@ -164,13 +166,14 @@ include('Sidebar.php');
 
     <div id="user-info" class="section">
         <div id="content">
-            <h2>Reported User Information</h2>
+            <h2>Reported Admin Information</h2>
             <table id="reportedUserTable">
                 <tr>
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Categories</th>
+                    <th>Report</th>
+                    <th>Reported By</th>
                     <th>Signup Time</th>
                     <th>Status</th>
                 </tr>
@@ -181,7 +184,6 @@ include('Sidebar.php');
                         echo "<td>{$row['uid']}</td>";
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
-                        echo "<td><button class='category-button' onclick='showReason(\"{$row['uid']}\")'>{$row['Categories']}</button></td>";
                         echo "<td>{$row['signup_time']}</td>";
                         echo "<td>{$row['status']}</td>";
                         echo "</tr>";
