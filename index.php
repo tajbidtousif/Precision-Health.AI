@@ -1,6 +1,7 @@
 <?php
 include "config.php";
 include "mail_service.php";
+
 session_start();
 
 if (isset($_SESSION['id'])) {
@@ -10,10 +11,7 @@ if (isset($_SESSION['id'])) {
 // LOGIN PROCESS CODE
 if (isset($_POST['login'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']);
-
-    // Hash the password for comparison
-    $hashedPassword = md5($password);
+    $password = mysqli_real_escape_string($conn, $_POST['password']); // Do not hash the password here
 
     $sqlLogin = "SELECT * FROM user WHERE email ='".$email."' AND status = 'active'";
     $resultLogin = mysqli_query($conn, $sqlLogin);
@@ -21,19 +19,28 @@ if (isset($_POST['login'])) {
     if (mysqli_num_rows($resultLogin) == 1) {
         // User found, check password
         $rowLogin = mysqli_fetch_assoc($resultLogin);
-        if (password_verify($password, $rowLogin['password'])) {
+        $hashedPassword = $rowLogin['password']; // Get hashed password from database
+
+        // Verify the entered password with the hashed password
+        if (password_verify($password, $hashedPassword)) { // Compare hashed passwords
+            // Passwords match, proceed with login
             $_SESSION['id'] = $rowLogin['uid'];
             $_SESSION['name'] = $rowLogin['name'];
             $_SESSION['role'] = $rowLogin['role'];
             
+            // Redirect to appropriate dashboard based on user role
             if ($rowLogin['role'] == 'user') {
-                header("Location: service.php"); // Redirect to user dashboard
+                header("Location: service.php");
                 exit();
             } elseif ($rowLogin['role'] == 'admin') {
-                header("Location: admin-panel/admin_dashboard.php"); // Redirect to admin dashboard
+                header("Location: admin-panel/admin_dashboard.php");
+                exit();
+            } elseif ($rowLogin['role'] == 'superadmin') {
+                header("Location: super-admin-panel/superAdminDashboard.php");
                 exit();
             }
         } else {
+            // Passwords don't match, show error message
             echo "<script>alert('Incorrect password');</script>";
         }
     } else {
@@ -41,6 +48,7 @@ if (isset($_POST['login'])) {
         echo "<script>alert('No user found');</script>";
     }
 }
+
 
 
 // SINGUP PROCESS CODE 

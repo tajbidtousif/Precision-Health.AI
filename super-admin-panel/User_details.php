@@ -112,13 +112,13 @@ include('superAdminSidebar.php');
         body {
             margin: 0;
             padding: 0;
-            font-family: 'Poppins', sans-serif;
             background-color: var(--grey);
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
             background-color: #1b203d;
+            font-family: system-ui;
         }
 
         #content {

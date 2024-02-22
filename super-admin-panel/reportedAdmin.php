@@ -66,6 +66,7 @@ $result = mysqli_query($conn_otp, $sql);
             margin: 0;
             padding: 0;
             background-color: #1b203d;
+            font-family: system-ui;
         }
 
         #content h2{

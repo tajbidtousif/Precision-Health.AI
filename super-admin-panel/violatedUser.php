@@ -57,6 +57,7 @@ include('superAdminSidebar.php');
             margin: 0;
             padding: 0;
             background-color: #1b203d;
+            font-family: system-ui;
         }
 
         #user-info {

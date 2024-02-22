@@ -1,4 +1,11 @@
 <?php
+
+// if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'superadmin') {
+//     // Redirect the user to the login page
+//     header("Location: /Project-4800/index.php");
+//     exit(); // Stop further execution
+// }
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -37,7 +44,7 @@ $rowReportedUsers = mysqli_fetch_assoc($resultReportedUsers);
 $totalReportedUsers = $rowReportedUsers['total_reported_users'];
 
 
-include 'superAdminSidebar.php'; 
+include 'superAdminSidebar.php';
 ?>
 
 <!DOCTYPE HTML>

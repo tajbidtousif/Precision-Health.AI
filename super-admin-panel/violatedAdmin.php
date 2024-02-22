@@ -26,7 +26,6 @@ include('superAdminSidebar.php');
     <title>Reported User Information</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <style>
-
         :root {
             --poppins: 'Poppins', sans-serif;
             --lato: 'Lato', sans-serif;
@@ -43,20 +42,19 @@ include('superAdminSidebar.php');
             --orange: #FD7238;
             --light-orange: #FFE0D3;
             --green: #4caf50;
-           
+
         }
 
         html {
             overflow-x: hidden;
         }
 
-      
-
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #1b203d;
+            font-family: system-ui;
         }
 
         #user-info {
@@ -64,20 +62,20 @@ include('superAdminSidebar.php');
             align-items: center;
             justify-content: center;
             min-height: 50vh;
-            
+
         }
 
         #content {
             margin-left: 280px;
             padding: 20px;
-            
+
         }
 
         h2 {
             color: #fff;
             margin-left: 30px;
             margin-bottom: 20px;
-            
+
         }
 
         #reportedUserTable {
@@ -113,10 +111,10 @@ include('superAdminSidebar.php');
 
         #reportedUserTable th,
         #reportedUserTable td {
-             border: 1px solid #ddd;
+            border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
-            color: white; 
+            color: white;
         }
 
         #reportedUserTable th {

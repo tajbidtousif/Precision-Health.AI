@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_report'])) {
 
             // Insert the user into "violated_user" database with Categories value
             $insert_sql = "INSERT INTO user (name, email, role, Categories, ReasonForDeactivating, status, reportedBy) 
-            VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated', '{$_SESSION['id']}')";
+            VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated', '{$_SESSION['admin_email']}')";
 
             if (mysqli_query($violated_conn, $insert_sql)) {
                 // User moved to "violated_user" successfully

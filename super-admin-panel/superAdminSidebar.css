@@ -1,3 +1,9 @@
+body {
+    margin-left: 300px; /* Adjust this value based on the width of your sidebar */
+}
+
+
+
 .sidenav {
     height: 100%;
     width: 300px;
