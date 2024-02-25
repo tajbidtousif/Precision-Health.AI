@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 // Check if the user is not logged in
 if (!isset($_SESSION['id'])) {
     // Redirect to the login page or any other desired page

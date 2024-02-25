@@ -12,7 +12,6 @@ if (!$isLoggedIn) {
     exit();
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,11 +25,8 @@ if (!$isLoggedIn) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <!-- Custom CSS -->
   <style>
-
-
     body {
       font-family: 'Arial', sans-serif;
-      
       position: relative;
       background-size: cover;
       background-repeat: no-repeat;
@@ -42,16 +38,20 @@ if (!$isLoggedIn) {
       0% {
         background-image: url('img/1.png');
       }
+
       33% {
         background-image: url('img/2.png');
       }
+
       66% {
         background-image: url('img/3.png');
       }
+
       100% {
         background-image: url('img/4.png');
       }
     }
+
     .dashboard {
       padding: 40px;
     }
@@ -128,35 +128,54 @@ if (!$isLoggedIn) {
     }
 
     .navbar {
-     
       padding: 1rem;
     }
 
     .navbar .navbar-brand {
-    color: #d46b25;
-    font-size: 1.5rem;
-    font-weight: bold;
-    transition: color 0.3s; 
-  }
+      color: #d46b25;
+      font-size: 1.5rem;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
 
-  @keyframes rubberBand {
-  0% { transform: scaleX(1); }
-  30% { transform: scaleX(1.25); }
-  40% { transform: scaleX(0.75); }
-  50% { transform: scaleX(1.15); }
-  65% { transform: scaleX(0.95); }
-  75% { transform: scaleX(1.05); }
-  100% { transform: scaleX(1); }
-}
+    @keyframes rubberBand {
+      0% {
+        transform: scaleX(1);
+      }
 
+      30% {
+        transform: scaleX(1.25);
+      }
 
-.navbar-brand {
-  transition: transform 0.5s;
-}
+      40% {
+        transform: scaleX(0.75);
+      }
 
-.navbar-brand:hover {
-  animation: rubberBand 0.5s;
-}
+      50% {
+        transform: scaleX(1.15);
+      }
+
+      65% {
+        transform: scaleX(0.95);
+      }
+
+      75% {
+        transform: scaleX(1.05);
+      }
+
+      100% {
+        transform: scaleX(1);
+      }
+    }
+
+    .navbar-brand {
+      transition: transform 0.5s;
+    }
+
+    .navbar-brand:hover {
+      animation: rubberBand 0.5s;
+    }
+
     .navbar-nav .nav-link {
       color: rgb(255, 255, 255);
       font-size: 1.2rem;
@@ -170,28 +189,27 @@ if (!$isLoggedIn) {
     }
 
     footer {
-    
       color: #fff;
       text-align: center;
       padding: 10px 0;
       font-size: 0.9rem;
       margin-top: 30px;
     }
+
     .btn-outline-success {
-      background-color: #007bff; 
-      color: #fff; 
-    }
-    .btn-outline-success {
-      background-color: #007bff; 
-      color: #fff; 
+      background-color: #007bff;
+      color: #fff;
     }
 
-    
+    .btn-outline-success {
+      background-color: #007bff;
+      color: #fff;
+    }
+
     .btn-outline-success:hover {
-      background-color: #163de7; 
-      color: #fff; 
+      background-color: #163de7;
+      color: #fff;
     }
-
   </style>
 </head>
 
@@ -220,87 +238,55 @@ if (!$isLoggedIn) {
           <li class="nav-item">
             <a class="nav-link" href="contact.html">Contact</a>
           </li>
-        </ul> 
+        </ul>
         <form class="d-flex">
           <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success" type="button" onclick="redirectToIndex()">Login</button>
-        </form> 
+        </form>
       </div>
     </div>
   </nav>
 
- 
-<div class="container dashboard">
+
+  <div class="container dashboard">
     <div class="row justify-content-center">
-          <div class="col-lg-4 col-md-6 mb-4">
-    <div class="feature-item">
-        <i class="fas fa-weight"></i>
-        <h4>Personalized Health</h4>
-        <p>Get personalized health advice based on your BMI data and health condition.</p>
-        <?php if ($isLoggedIn) { ?>
-            <a href="precisionHealth.php" class="btn btn-primary btn-block">GET ADVICE</a>
-        <?php } else { ?>
-            <button class="btn btn-primary btn-block" disabled>Login to Get Advice</button>
-        <?php } ?>
-    </div>
-</div>
-
-           <!-- Feature: Health Analysis -->
-<div class="col-lg-4 col-md-6 mb-4">
-    <div class="feature-item">
-        <i class="fas fa-tasks"></i>
-        <h4>Health Analysis</h4>
-        <p>Set your health goals and track your progress towards achieving them with personalized insights.</p>
-        <?php if ($isLoggedIn) { ?>
-            <a href="comingSoon.php" class="btn btn-primary btn-block" style="margin-top: 5px;">SET GOALS</a>
-        <?php } else { ?>
-            <button class="btn btn-primary btn-block" style="margin-top: 5px;" disabled>Login to Set Goals</button>
-        <?php } ?>
-    </div>
-</div>
-
-    <div class="more-features">
-        <div class="row">
-            <!-- Feature Idea 1: Doctor's Blog -->
-            <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-item">
-            <i class="fas fa-user-md"></i>
-            <h4>Doctor's Blog</h4>
-            <p>Read informative blog posts and health advice from experienced doctors.</p>
-            <a href="comingSoon.php" class="btn btn-primary btn-block" style="margin-top: 35px;">READ MORE</a>
-          </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="fas fa-weight"></i>
+          <h4>Personalized Health</h4>
+          <p>Get personalized health advice based on your BMI data and health condition.</p>
+          <button class="btn btn-primary btn-block" disabled>Login to Get Advice</button>
         </div>
+      </div>
 
-            <!-- Feature Idea 2: Sleep Quality Monitor -->
-            <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-item">
-            <i class="fas fa-bed"></i>
-            <h4>Sleep Quality Monitor</h4>
-            <p>Monitor your sleep patterns to improve your overall well-being.</p>
-            <a href="comingSoon.php" class="btn btn-primary btn-block">MONITOR SLEEP</a>
-          </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="fas fa-tasks"></i>
+          <h4>Health Analysis</h4>
+          <p>Set your health goals and track your progress towards achieving them with personalized insights.</p>
+          <button class="btn btn-primary btn-block" style="margin-top: 5px;" disabled>Login to Set Goals</button>
         </div>
+      </div>
 
-            <!-- Feature Idea 3: Health E-Commerce -->
-            <div class="col-lg-4 col-md-6 mb-4">
-          <div class="feature-item">
-            <i class="fas fa-shopping-cart"></i>
-            <h4>Health E-Commerce</h4>
-            <p>Shop for health products and supplements from trusted brands.</p>
-            <a href="comingSoon.php" class="btn btn-primary btn-block">SHOP NOW</a>
-          </div>
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="fas fa-user-md"></i>
+          <h4>News-Letter</h4>
+          <p>Read informative about health advice from us</p>
+          <a href="newsletterPage.php" class="btn btn-primary btn-block">READ MORE</a>
         </div>
-            
+      </div>
+
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="feature-item">
+          <i class="fas fa-shopping-cart"></i>
+          <h4>Health E-Commerce</h4>
+          <p>Shop for health products and supplements from trusted brands.</p>
+          <a href="comingSoon.php" class="btn btn-primary btn-block">SHOP NOW</a>
         </div>
+      </div>
     </div>
-</div>
-
-<?php if ($isLoggedIn) { ?>
-    <div class="container">
-        <h1 style="color: white; font-weight: bold"; > Welcome <?php if(isset($_COOKIE['username'])){ echo $_COOKIE['username']; }?></h1>
-        <a href="logout.php">Logout</a>
-    </div>
-<?php } ?>
+  </div>
 
   <!-- Footer -->
   <footer>
@@ -323,15 +309,11 @@ if (!$isLoggedIn) {
     window.onload = preloadImages;
   </script>
 
-    <script>
-        function redirectToIndex() {
-            window.location.href = "index.php";
-        }
-    </script>
-
- 
-  
- 
+  <script>
+    function redirectToIndex() {
+      window.location.href = "index.php";
+    }
+  </script>
 
   <!-- Bootstrap JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

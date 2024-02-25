@@ -82,8 +82,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_action'])) {
 include('superAdminSidebar.php');
 ?>
 
-include('superAdminSidebar.php');
-?>
 
 <!DOCTYPE html>
 <html lang="en">

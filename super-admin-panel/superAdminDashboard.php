@@ -264,11 +264,10 @@ include 'superAdminSidebar.php';
 
 <body>
 
-
     <div id="main">
         <div class="head">
             <div class="col-div-6">
-                <span style="font-size:30px;cursor:pointer; color: white;" class="nav">☰ Dashboard</span>
+                <span style="font-size:30px; color: white;" class="nav">☰ Dashboard</span>
             </div>
         </div>
         <br />

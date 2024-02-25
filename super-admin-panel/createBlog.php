@@ -176,7 +176,7 @@ include('superAdminSidebar.php');
         <div class="form-wrap">
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>"
                 enctype="multipart/form-data">
-                <h1>Create <span>Blog</span></h1>
+                <h1>Create <span>News-Letter</span></h1>
                 <input type="text" name="title" placeholder="Title" required>
                 <textarea name="content" placeholder="Write Body" rows="5" required></textarea>
                 <input type="file" name="image" id="image" accept="image/*">
