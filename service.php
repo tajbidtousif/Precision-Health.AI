@@ -1,17 +1,18 @@
 <?php
-session_start(); 
-$isLoggedIn = false;
+// session_start(); 
+// $isLoggedIn = false;
 
-if (isset($_SESSION['id'])) {
-    $isLoggedIn = true;
-}
+// if (isset($_SESSION['id'])) {
+//     $isLoggedIn = true;
+// }
 
-// Redirect to index.php if not logged in
-if (!$isLoggedIn) {
-    header("Location: index.php");
-    exit();
-}
+// // Redirect to index.php if not logged in
+// if (!$isLoggedIn) {
+//     header("Location: index.php");
+//     exit();
+// }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -54,6 +55,7 @@ if (!$isLoggedIn) {
 
     .dashboard {
       padding: 40px;
+      margin-top: 80px; /* Adjust the top margin */
     }
 
     .dashboard h2 {
@@ -129,6 +131,10 @@ if (!$isLoggedIn) {
 
     .navbar {
       padding: 1rem;
+      backdrop-filter: blur(10px);
+      /* Add blur effect */
+      margin-bottom: 20px;
+      /* Add space at the bottom */
     }
 
     .navbar .navbar-brand {
@@ -138,52 +144,14 @@ if (!$isLoggedIn) {
       transition: color 0.3s;
     }
 
-    @keyframes rubberBand {
-      0% {
-        transform: scaleX(1);
-      }
-
-      30% {
-        transform: scaleX(1.25);
-      }
-
-      40% {
-        transform: scaleX(0.75);
-      }
-
-      50% {
-        transform: scaleX(1.15);
-      }
-
-      65% {
-        transform: scaleX(0.95);
-      }
-
-      75% {
-        transform: scaleX(1.05);
-      }
-
-      100% {
-        transform: scaleX(1);
-      }
-    }
-
-    .navbar-brand {
-      transition: transform 0.5s;
-    }
-
-    .navbar-brand:hover {
-      animation: rubberBand 0.5s;
-    }
-
-    .navbar-nav .nav-link {
+    .navbar .navbar-nav .nav-link {
       color: rgb(255, 255, 255);
       font-size: 1.2rem;
       margin-right: 20px;
       transition: color 0.3s;
     }
 
-    .navbar-nav .nav-link:hover {
+    .navbar .navbar-nav .nav-link:hover {
       color: rgb(238, 234, 234);
       transform: scale(1.1);
     }
@@ -201,11 +169,6 @@ if (!$isLoggedIn) {
       color: #fff;
     }
 
-    .btn-outline-success {
-      background-color: #007bff;
-      color: #fff;
-    }
-
     .btn-outline-success:hover {
       background-color: #163de7;
       color: #fff;
@@ -215,7 +178,7 @@ if (!$isLoggedIn) {
 
 <body>
 
-  <nav class="navbar navbar-expand-md navbar-light">
+  <nav class="navbar navbar-expand-md navbar-light fixed-top">
     <div class="container">
       <a class="navbar-brand fun-animation" href="landingpage.php">
         <i class="fa fa-male"></i> precisionHealth.com
@@ -307,9 +270,7 @@ if (!$isLoggedIn) {
     }
 
     window.onload = preloadImages;
-  </script>
 
-  <script>
     function redirectToIndex() {
       window.location.href = "index.php";
     }
