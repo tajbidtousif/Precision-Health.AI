@@ -23,20 +23,47 @@ if (!$result) {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Newsletter Page</title>
     <!-- Bootstrap CSS -->
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
+        /* Your existing CSS styles here */
+
+        /* Adjust the margin between cards */
+        .card {
+            margin-bottom: 20px;
+            /* Reduce the bottom margin */
+        }
+
+        /* Adjustments for "Read More" button */
+        .card {
+            position: relative;
+        }
+
+        .btn-read-more {
+            display: none;
+            /* Initially hide the button */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 3px;
+        }
+
+        .card:hover .btn-read-more {
+            display: block;
+            /* Display button on hover */
+        }
+
         @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
 
         body {
@@ -185,6 +212,7 @@ if (!$result) {
     </nav>
     <div class="container">
         <div class="row">
+
             <?php
             if (mysqli_num_rows($result) > 0) {
                 while ($row = mysqli_fetch_assoc($result)) {
@@ -197,12 +225,15 @@ if (!$result) {
                             </div>
                             <div class="content">
                                 <h2>
-                                    <a href="newsDetails.php"><?php echo $row['title']; ?></a>
+                                    <a href="newsDetails.php">
+                                        <?php echo $row['title']; ?>
+                                    </a>
                                 </h2>
                                 <p>
                                     <?php echo $row['content']; ?>
                                 </p>
                             </div>
+                            <a href="newsDetails.php" class="btn btn-primary btn-read-more">Read More</a>
                         </div>
                     </div>
                     <?php
@@ -211,8 +242,10 @@ if (!$result) {
                 echo "No news available";
             }
             ?>
+
         </div>
     </div>
+
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
@@ -220,3 +253,8 @@ if (!$result) {
 </body>
 
 </html>
+
+<?php
+// Close the database connection
+mysqli_close($conn);
+?>

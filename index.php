@@ -11,7 +11,7 @@ if (isset($_SESSION['id'])) {
 // LOGIN PROCESS CODE
 if (isset($_POST['login'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']); // Do not hash the password here
+    $password = mysqli_real_escape_string($conn, $_POST['password']); 
 
     $sqlLogin = "SELECT * FROM user WHERE email ='".$email."' AND status = 'active'";
     $resultLogin = mysqli_query($conn, $sqlLogin);
@@ -63,7 +63,7 @@ if (isset($_POST['register'])) {
 	$otp = $_POST['otp'];
 	$activation_code = $_POST['activation_code'];
 	$name = mysqli_real_escape_string($conn, $_POST['name']);
-	$email = mysqli_real_escape_string($conn, $_POST['email']);
+	$email = mysqli_real_escape_string($conn, $_POST['email']); //textfield er man variable e store korlam
 	$password = mysqli_real_escape_string($conn, md5($_POST['password']));
 
 	$selectDatabase = "SELECT * FROM user WHERE email = '" . $email . "'";
