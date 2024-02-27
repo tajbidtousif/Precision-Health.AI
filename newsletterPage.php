@@ -21,8 +21,8 @@ $result = mysqli_query($conn, $sql);
 if (!$result) {
     die("Error executing the query: " . mysqli_error($conn));
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -225,15 +225,16 @@ if (!$result) {
                             </div>
                             <div class="content">
                                 <h2>
-                                    <a href="newsDetails.php">
-                                        <?php echo $row['title']; ?>
-                                    </a>
+
+                                    <?php echo $row['title']; ?>
+
                                 </h2>
                                 <p>
                                     <?php echo $row['content']; ?>
                                 </p>
                             </div>
-                            <a href="newsDetails.php" class="btn btn-primary btn-read-more">Read More</a>
+                            <a href="newsDetails.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-read-more">Read More</a>
+
                         </div>
                     </div>
                     <?php

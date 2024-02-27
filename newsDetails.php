@@ -1,29 +1,59 @@
 <?php
-// session_start(); 
-// $isLoggedIn = false;
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "otp_verification";
 
-// if (isset($_SESSION['id'])) {
-//     $isLoggedIn = true;
-// }
+// Create connection
+$conn = mysqli_connect($servername, $username, $password, $dbname);
 
-// // Redirect to index.php if not logged in
-// if (!$isLoggedIn) {
-//     header("Location: index.php");
-//     exit();
-// }
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Check if the news ID is provided in the URL
+if (isset($_GET['id'])) {
+    $news_id = $_GET['id'];
+
+    // Retrieve the news details from the database
+    $sql = "SELECT * FROM newsletter WHERE id = $news_id";
+    $result = mysqli_query($conn, $sql);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $title = $row['title'];
+        $content = $row['content'];
+    } else {
+        // Redirect to the newsletter page if news article not found
+        $newsletterPageURL = "newsletterPage.php";
+        header("Location: $newsletterPageURL");
+        exit();
+    }
+} else {
+    // Redirect to the newsletter page if news ID is not provided
+    $newsletterPageURL = "newsletterPage.php";
+    header("Location: $newsletterPageURL");
+    exit();
+}
+
+// Close the database connection
+mysqli_close($conn);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Health News Details</title>
-    <!-- Bootstrap CSS -->
+    <title>
+        <?php echo $title; ?> - Health News Details
+    </title>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <!-- Font Awesome -->
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <!-- Custom CSS -->
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -121,64 +151,19 @@
 <body>
 
     <nav class="navbar navbar-expand-md navbar-light fixed-top">
-        <div class="container">
-            <a class="navbar-brand fun-animation" href="landingpage.php">
-                <i class="fa fa-male"></i> precisionHealth.com
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="landingpage.php">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.php">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="service.php">Services</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.html">Contact</a>
-                    </li>
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="button" onclick="redirectToIndex()">Login</button>
-                </form>
-            </div>
-        </div>
+        <!-- Your navbar code here -->
     </nav>
-
 
     <div class="container news-details">
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="news-content">
-                    <h3>Title of the News Article</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla suscipit urna eu dui sagittis,
-                        vel
-                        hendrerit mauris varius. Aliquam erat volutpat. Nam posuere enim vel malesuada vehicula.
-                        Suspendisse potenti. Proin vel felis ligula. Nam a tellus vel felis mollis tempus et in purus.
-                        Nam vehicula semper turpis, vel venenatis lacus scelerisque at. Duis tincidunt turpis eu
-                        ultricies
-                        malesuada. Phasellus quis tellus sit amet leo placerat malesuada.</p>
-                    <p>Integer sollicitudin mauris vel purus facilisis viverra. Vestibulum ultrices nibh a nulla
-                        faucibus,
-                        id iaculis metus vehicula. Cras eget sollicitudin leo. In malesuada varius ligula, id
-                        tincidunt
-                        dolor rhoncus sit amet. Aliquam tempor quam at metus iaculis, at rutrum erat luctus. Nullam
-                        mattis
-                        libero et nisl vehicula, id varius nisi dictum. In vitae eros velit. Aenean ac metus sem.</p>
-                    <p>Fusce suscipit venenatis ipsum, nec venenatis risus elementum sit amet. In scelerisque metus a
-                        felis tincidunt, non ultricies lectus molestie. Aliquam viverra tristique ex eget lacinia.
-                        Proin
-                        ut lacus sollicitudin, rhoncus mauris non, malesuada lectus. Curabitur quis quam risus. Cras
-                        tincidunt turpis ut leo elementum, a dapibus enim tincidunt. Sed sem nisi, pellentesque non
-                        facilisis nec, aliquet non tortor. Cras nec sapien ultricies, efficitur sapien vitae, tempor
-                        nulla. Donec nec risus a velit rutrum feugiat.</p>
+                    <h3>
+                        <?php echo $title; ?>
+                    </h3>
+                    <p>
+                        <?php echo $content; ?>
+                    </p>
                 </div>
                 <a href="newsletterPage.php" class="btn btn-primary btn-block">Back to News</a>
             </div>
@@ -186,18 +171,7 @@
     </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p>&copy; 2023 PrecisionHealth.Com. All rights reserved.</p>
-            <p>Leading University, Sylhet, Bangladesh</p>
-        </div>
-    </footer>
-
-    <script>
-        function redirectToIndex() {
-            window.location.href = "index.php";
-        }
-    </script>
+    <!-- Your footer code here -->
 
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>

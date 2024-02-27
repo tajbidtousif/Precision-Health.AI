@@ -2,38 +2,42 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbname_otp = "otp_verification";
-$dbname_violated = "violated_user";
+$dbname = "otp_verification";
 
-// Connect to otp_verification database
-$conn_otp = mysqli_connect($servername, $username, $password, $dbname_otp);
-if (!$conn_otp) {
+// Connect to the otp_verification database
+$conn = mysqli_connect($servername, $username, $password, $dbname);
+
+// Check connection
+if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
 }
 
-// Connect to violated_user database
-$conn_violated = mysqli_connect($servername, $username, $password, $dbname_violated);
-if (!$conn_violated) {
-    die("Connection failed: " . mysqli_connect_error());
-}
+// Fetch reported admins from otp_verification database
+$sql = "SELECT uid, name, email, role, signup_time, status, adminReport, reportedBy FROM user WHERE role = 'admin' AND adminReport IS NOT NULL AND adminReport <> ''";
+$result = mysqli_query($conn, $sql);
 
+// Handle form submission
 if (isset($_POST['take_action'])) {
     $uid = $_POST['uid'];
 
     // Retrieve admin information from otp_verification database
     $sql_select_admin = "SELECT * FROM user WHERE uid = $uid";
-    $result_admin = mysqli_query($conn_otp, $sql_select_admin);
+    $result_admin = mysqli_query($conn, $sql_select_admin);
 
     if (mysqli_num_rows($result_admin) == 1) {
         $admin_data = mysqli_fetch_assoc($result_admin);
 
+        // Connect to the violated_user database
+        $violated_conn = mysqli_connect("localhost", "root", "", "violated_user");
+
         // Insert admin information into violated_user database
-        $sql_insert_violated = "INSERT INTO user (uid, name, email, role, ReasonForDeactivating, signup_time, status) VALUES 
-                        ('{$admin_data['uid']}', '{$admin_data['name']}', '{$admin_data['email']}', '{$admin_data['role']}', '{$admin_data['adminReport']}', '{$admin_data['signup_time']}', '{$admin_data['status']}')";
-        if (mysqli_query($conn_violated, $sql_insert_violated)) {
+        $insert_sql = "INSERT INTO user (uid, name, email, role, Categories, ReasonForDeactivating, reportedBy, signup_time, status) 
+                        VALUES ('{$admin_data['uid']}', '{$admin_data['name']}', '{$admin_data['email']}', '{$admin_data['role']}', '', '{$admin_data['adminReport']}', '{$admin_data['reportedBy']}', '{$admin_data['signup_time']}', '{$admin_data['status']}')";
+
+        if (mysqli_query($violated_conn, $insert_sql)) {
             // Delete admin record from otp_verification database
-            $sql_delete_admin = "DELETE FROM user WHERE uid = $uid";
-            if (mysqli_query($conn_otp, $sql_delete_admin)) {
+            $delete_sql = "DELETE FROM user WHERE uid = $uid";
+            if (mysqli_query($conn, $delete_sql)) {
                 echo "<script>alert('Action taken successfully!');</script>";
             } else {
                 echo "<script>alert('Failed to delete admin record from otp_verification database.');</script>";
@@ -41,17 +45,17 @@ if (isset($_POST['take_action'])) {
         } else {
             echo "<script>alert('Failed to insert admin information into violated_user database.');</script>";
         }
+
+        // Close violated_user database connection
+        mysqli_close($violated_conn);
     } else {
         echo "<script>alert('Admin not found in otp_verification database.');</script>";
     }
 }
 
 include('superAdminSidebar.php');
-
-// Fetch reported admins from otp_verification database
-$sql = "SELECT uid, name, email, role, signup_time, status, adminReport FROM user WHERE role = 'admin' AND adminReport IS NOT NULL AND adminReport <> ''";
-$result = mysqli_query($conn_otp, $sql);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,21 +73,16 @@ $result = mysqli_query($conn_otp, $sql);
             font-family: system-ui;
         }
 
-        #content h2{
-            color: #fff;
-            margin-left: 30px;
-            margin-bottom: 20px;
-            margin-top: 100px;
-        }
-
         #content {
             margin-left: 280px;
             padding: 20px;
         }
 
         h2 {
-            color: #333;
+            color: #fff;
+            margin-left: 30px;
             margin-bottom: 20px;
+            margin-top: 100px;
         }
 
         table {
@@ -127,12 +126,8 @@ $result = mysqli_query($conn_otp, $sql);
     </style>
 </head>
 <body>
-    <!-- Include SuperAdmin sidebar -->
-    <?php include('superAdminSidebar.php'); ?>
-
     <div id="content">
         <h2>Reported Admin Information</h2>
-
         <!-- Display admin information and reports in a table -->
         <table>
             <thead>
@@ -140,6 +135,7 @@ $result = mysqli_query($conn_otp, $sql);
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Report By</th>
                     <th>Admin Report</th>
                     <th>Action</th>
                 </tr>
@@ -152,6 +148,7 @@ $result = mysqli_query($conn_otp, $sql);
                         echo "<td>{$row['uid']}</td>";
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
+                        echo "<td>{$row['reportedBy']}</td>"; // This assumes 'reportedBy' is a column in your user table
                         echo "<td>{$row['adminReport']}</td>";
                         echo "<td>";
                         echo "<form method='post'>";
@@ -172,7 +169,6 @@ $result = mysqli_query($conn_otp, $sql);
 </html>
 
 <?php
-// Close database connections
-mysqli_close($conn_otp);
-mysqli_close($conn_violated);
+// Close otp_verification database connection
+mysqli_close($conn);
 ?>

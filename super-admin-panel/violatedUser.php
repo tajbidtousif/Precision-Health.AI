@@ -26,7 +26,6 @@ include('superAdminSidebar.php');
     <title>Reported User Information</title>
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <style>
-
         :root {
             --poppins: 'Poppins', sans-serif;
             --lato: 'Lato', sans-serif;
@@ -43,14 +42,14 @@ include('superAdminSidebar.php');
             --orange: #FD7238;
             --light-orange: #FFE0D3;
             --green: #4caf50;
-           
+
         }
 
         html {
             overflow-x: hidden;
         }
 
-      
+
 
         body {
             font-family: Arial, sans-serif;
@@ -65,20 +64,20 @@ include('superAdminSidebar.php');
             align-items: center;
             justify-content: center;
             min-height: 50vh;
-            
+
         }
 
         #content {
             margin-left: 280px;
             padding: 20px;
-            
+
         }
 
         h2 {
             color: #fff;
             margin-left: 30px;
             margin-bottom: 20px;
-            
+
         }
 
         #reportedUserTable {
@@ -114,10 +113,10 @@ include('superAdminSidebar.php');
 
         #reportedUserTable th,
         #reportedUserTable td {
-             border: 1px solid #ddd;
+            border: 1px solid #ddd;
             padding: 12px;
             text-align: left;
-            color: white; 
+            color: white;
         }
 
         #reportedUserTable th {
@@ -174,6 +173,7 @@ include('superAdminSidebar.php');
                     <th>Name</th>
                     <th>Email</th>
                     <th>Categories</th>
+                    <th>Reported By</th>
                     <th>Signup Time</th>
                     <th>Status</th>
                 </tr>
@@ -185,12 +185,13 @@ include('superAdminSidebar.php');
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
                         echo "<td><button class='category-button' onclick='showReason(\"{$row['uid']}\")'>{$row['Categories']}</button></td>";
+                        echo "<td>{$row['reportedBy']}</td>";
                         echo "<td>{$row['signup_time']}</td>";
                         echo "<td>{$row['status']}</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='6'>No reported users found</td></tr>";
+                    echo "<tr><td colspan='7'>No reported users found</td></tr>";
                 }
                 ?>
             </table>

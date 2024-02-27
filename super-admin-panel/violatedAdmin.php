@@ -170,10 +170,7 @@ include('superAdminSidebar.php');
                     <th>UID</th>
                     <th>Name</th>
                     <th>Email</th>
-                    <th>Report</th>
                     <th>Reported By</th>
-                    <th>Signup Time</th>
-                    <th>Status</th>
                 </tr>
                 <?php
                 if ($result->num_rows > 0) {
@@ -182,12 +179,11 @@ include('superAdminSidebar.php');
                         echo "<td>{$row['uid']}</td>";
                         echo "<td>{$row['name']}</td>";
                         echo "<td>{$row['email']}</td>";
-                        echo "<td>{$row['signup_time']}</td>";
-                        echo "<td>{$row['status']}</td>";
+                        echo "<td>{$row['reportedBy']}</td>";
                         echo "</tr>";
                     }
                 } else {
-                    echo "<tr><td colspan='6'>No reported users found</td></tr>";
+                    echo "<tr><td colspan='4'>No reported users found</td></tr>";
                 }
                 ?>
             </table>
