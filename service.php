@@ -1,16 +1,17 @@
 <?php
-// session_start(); 
-// $isLoggedIn = false;
+session_start();
+$isLoggedIn = false;
 
-// if (isset($_SESSION['id'])) {
-//     $isLoggedIn = true;
-// }
+if (isset($_SESSION['id'])) {
+  $isLoggedIn = true;
+}
 
-// // Redirect to index.php if not logged in
-// if (!$isLoggedIn) {
-//     header("Location: index.php");
-//     exit();
-// }
+// Logout logic
+if (isset($_POST['logout'])) {
+  session_destroy();
+  header("Location: index.php");
+  exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +56,8 @@
 
     .dashboard {
       padding: 40px;
-      margin-top: 80px; /* Adjust the top margin */
+      margin-top: 80px;
+      /* Adjust the top margin */
     }
 
     .dashboard h2 {
@@ -202,14 +204,21 @@
             <a class="nav-link" href="contact.html">Contact</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="button" onclick="redirectToIndex()">Login</button>
-        </form>
+        <?php if ($isLoggedIn): ?>
+          <!-- If logged in, display logout button -->
+          <form method="post" class="d-flex">
+            <button type="submit" name="logout" class="btn btn-outline-danger">Logout</button>
+          </form>
+        <?php else: ?>
+          <!-- If not logged in, display login button -->
+          <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="button" onclick="redirectToIndex()">Login</button>
+          </form>
+        <?php endif; ?>
       </div>
     </div>
   </nav>
-
 
   <div class="container dashboard">
     <div class="row justify-content-center">
@@ -218,18 +227,30 @@
           <i class="fas fa-weight"></i>
           <h4>Personalized Health</h4>
           <p>Get personalized health advice based on your BMI data and health condition.</p>
-          <button class="btn btn-primary btn-block" disabled>Login to Get Advice</button>
+          <?php if ($isLoggedIn): ?>
+            <!-- If logged in, enable the button -->
+            <a href="getAdvice.php" class="btn btn-primary btn-block">Get Advice</a>
+          <?php else: ?>
+            <!-- If not logged in, disable the button -->
+            <button class="btn btn-primary btn-block" disabled>Login to Get Advice</button>
+          <?php endif; ?>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
-        <div class="feature-item">
-          <i class="fas fa-tasks"></i>
-          <h4>Health Analysis</h4>
-          <p>Set your health goals and track your progress towards achieving them with personalized insights.</p>
-          <button class="btn btn-primary btn-block" style="margin-top: 5px;" disabled>Login to Set Goals</button>
-        </div>
-      </div>
+    <div class="feature-item">
+        <i class="fas fa-tasks"></i>
+        <h4>Health Analysis</h4>
+        <p>Set your health goals and track your progress towards achieving them with personalized insights.</p>
+        <?php if ($isLoggedIn) : ?>
+            <!-- If logged in, enable the button -->
+            <a href="setGoals.php" class="btn btn-primary btn-block">Set Goals</a>
+        <?php else : ?>
+            <!-- If not logged in, disable the button -->
+            <button class="btn btn-primary btn-block" disabled>Login to Set Goals</button>
+        <?php endif; ?>
+    </div>
+</div>
 
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="feature-item">
@@ -251,6 +272,7 @@
     </div>
   </div>
 
+
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -260,16 +282,7 @@
   </footer>
 
   <script>
-    // Function to preload images
-    function preloadImages() {
-      const images = ['img/1.png', 'img/2.png', 'img/3.png', 'img/4.png'];
-      images.forEach((image) => {
-        const img = new Image();
-        img.src = image;
-      });
-    }
-
-    window.onload = preloadImages;
+    // JavaScript content
 
     function redirectToIndex() {
       window.location.href = "index.php";
