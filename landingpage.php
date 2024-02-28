@@ -315,7 +315,7 @@ footer {
     </div>
 
     <div class="center-button">
-        <a href="index.php" class="btn btn-primary btn-lg">Get Started</a>
+        <a href="service.php" class="btn btn-primary btn-lg">Get Started</a>
     </div>
 
 
