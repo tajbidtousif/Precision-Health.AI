@@ -231,9 +231,10 @@ if (!$result) {
                                 </h2>
                                 <p>
                                     <?php echo $row['content']; ?>
+                                    
                                 </p>
                             </div>
-                            <a href="newsDetails.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-read-more">Read More</a>
+                            <a <?php echo 'href="newsDetails.php?id='.$row['uid'].'"'; ?> class="btn btn-primary btn-read-more">Read More</a>
 
                         </div>
                     </div>

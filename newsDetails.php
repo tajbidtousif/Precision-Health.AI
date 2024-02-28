@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
     $news_id = $_GET['id'];
 
     // Retrieve the news details from the database
-    $sql = "SELECT * FROM newsletter WHERE id = $news_id";
+    $sql = "SELECT * FROM newsletter WHERE uid = $news_id";
     $result = mysqli_query($conn, $sql);
 
     if ($result && mysqli_num_rows($result) > 0) {

@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($fullname_err) && empty($email_err) && empty($password_err) && empty($confirm_password_err)) {
 
         // Hash password
-        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $hashed_password = md5($password);
 
         // Prepare SQL statement to insert into database
         $sql = "INSERT INTO user (name, email, password, role, status) VALUES (?, ?, ?, 'admin', 'active')";

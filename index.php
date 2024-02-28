@@ -13,16 +13,16 @@ if (isset($_POST['login'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, $_POST['password']); 
 
-    $sqlLogin = "SELECT * FROM user WHERE email ='".$email."' AND status = 'active'";
-    $resultLogin = mysqli_query($conn, $sqlLogin);
+	$sqlLogin = "SELECT * FROM user WHERE email = '$email' AND status = 'active'";
+	$resultLogin = mysqli_query($conn, $sqlLogin);
 
     if (mysqli_num_rows($resultLogin) == 1) {
         // User found, check password
         $rowLogin = mysqli_fetch_assoc($resultLogin);
         $hashedPassword = $rowLogin['password']; // Get hashed password from database
-
+		
         // Verify the entered password with the hashed password
-        if (password_verify($password, $hashedPassword)) { // Compare hashed passwords
+        if (strcmp(md5($password), $hashedPassword)==0) { // Compare hashed passwords
             // Passwords match, proceed with login
             $_SESSION['id'] = $rowLogin['uid'];
             $_SESSION['name'] = $rowLogin['name'];
