@@ -9,6 +9,7 @@ It meticulously takes into account an individual's physical attributes, lifestyl
 - **AI Integrated ChatBot**: Real-time health-related assistance powered by GPT-3.5-Turbo.
 - **Dynamic Newsletter Board**: Stay updated with the latest health news.
 - **Admin & Super Admin Panels**: Tools for managing platform content and user engagement.
+  
 ![Precision](https://github.com/tajbidtousif/Precision-Health.AI/assets/86789646/9ac3ac94-17de-4c9b-8932-98593c7c98c5)
 
 ## Project Video
