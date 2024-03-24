@@ -48,7 +48,6 @@ We welcome contributions to "Precision Health.AI". If you have suggestions or im
 
 For further information or inquiries, please contact us at:
 
-- Takrim Elahi Chy - elahitakrim@gmail.com
 - Shah Tajbid Tousif - tajbidtousif@gmail.com
 
 ## Thank You
