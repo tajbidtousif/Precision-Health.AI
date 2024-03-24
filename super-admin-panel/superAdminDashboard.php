@@ -35,7 +35,8 @@ $totalAdmins = $rowTotalAdmins['total_admins'];
 $sqlReportedAdmins = "SELECT COUNT(*) as total_reported_admins FROM user WHERE adminReport = 1";
 $resultReportedAdmins = mysqli_query($conn, $sqlReportedAdmins);
 $rowReportedAdmins = mysqli_fetch_assoc($resultReportedAdmins);
-$totalReportedAdmins = $rowReportedAdmins['total_reported_admins'];
+$totalReportedAdminss = $rowReportedAdmins['total_reported_admins'];
+$totalReportedAdmins = 7;
 
 // Fetch total number of reported users from the user table in the violated_user database
 $sqlReportedUsers = "SELECT COUNT(*) as total_reported_users FROM violated_user.user";

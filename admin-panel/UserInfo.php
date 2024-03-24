@@ -1,9 +1,9 @@
 <?php
-
 session_start();
 
+
 if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
-    header("Location: /Project-4800/index.php");
+    header("Location: /Project-4800/index.php"); // Redirect to the login page or appropriate page
     exit();
 }
 
@@ -18,32 +18,32 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Number of records to show per page
+
 $records_per_page = 10;
 
-// Get the current page
+
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
     $current_page = $_GET['page'];
 } else {
     $current_page = 1;
 }
 
-// Calculate the offset for the query based on the current page
+
 $offset = ($current_page - 1) * $records_per_page;
 
-// Fetched user data with pagination
+
 $sql = "SELECT * FROM user WHERE role = 'user' LIMIT $offset, $records_per_page";
 $result = $conn->query($sql);
 
-// Count total number of records
+
 $total_records_sql = "SELECT COUNT(*) FROM user WHERE role = 'user'";
 $total_records_result = $conn->query($total_records_sql);
 $total_records = $total_records_result->fetch_array()[0];
 
-// Calculate the total number of pages
+
 $total_pages = ceil($total_records / $records_per_page);
 
-// Don't close the connection here
+
 
 include('sidebar.php');
 ?>

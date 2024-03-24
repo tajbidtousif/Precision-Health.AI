@@ -6,6 +6,7 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -54,9 +55,7 @@ include('Sidebar.php');
 				<img src="img/people.png">
 			</a>
 		</nav>
-		<!-- NAVBAR -->
-
-		<!-- MAIN -->
+		
 		<main>
 			<div class="head-title">
 				<div class="left">

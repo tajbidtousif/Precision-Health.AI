@@ -1,5 +1,5 @@
 <?php
-// Database connection
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -10,7 +10,7 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Function to sanitize input data
+
 function sanitize_input($data)
 {
     $data = trim($data);
@@ -19,32 +19,32 @@ function sanitize_input($data)
     return $data;
 }
 
-// Define variables and initialize with empty values
+
 $fullname = $email = $password = $confirm_password = "";
 $fullname_err = $email_err = $password_err = $confirm_password_err = "";
 
-// Processing form data when form is submitted
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-    // Validate Full Name
+    
     if (empty($_POST["fullname"])) {
         $fullname_err = "Full Name is required";
     } else {
         $fullname = sanitize_input($_POST["fullname"]);
     }
 
-    // Validate Email
+    
     if (empty($_POST["email"])) {
         $email_err = "Email is required";
     } else {
         $email = sanitize_input($_POST["email"]);
-        // Check if email is valid
+        // Checking if email is valid
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $email_err = "Invalid email format";
         }
     }
 
-    // Validate Password
+    // Validating Password
     if (empty($_POST["password"])) {
         $password_err = "Password is required";
     } else {

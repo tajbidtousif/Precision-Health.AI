@@ -1,4 +1,12 @@
 <?php
+// Start session
+session_start();
+
+if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
+    header("Location: /Project-4800/index.php");
+    exit();
+}
+
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -10,50 +18,52 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Number of records to show per page
 $records_per_page = 10;
 
-// Get the current page
 if (isset($_GET['page']) && is_numeric($_GET['page'])) {
     $current_page = $_GET['page'];
 } else {
     $current_page = 1;
 }
 
-// Calculate the offset for the query based on the current page
+
 $offset = ($current_page - 1) * $records_per_page;
 
-// Fetched user data with pagination
+
 $sql = "SELECT * FROM user WHERE role = 'admin' LIMIT $offset, $records_per_page";
 $result = $conn->query($sql);
 
-// Count total number of records
+
 $total_records_sql = "SELECT COUNT(*) FROM user WHERE role = 'admin'";
 $total_records_result = $conn->query($total_records_sql);
 $total_records = $total_records_result->fetch_array()[0];
 
-// Calculate the total number of pages
+
 $total_pages = ceil($total_records / $records_per_page);
 
 include('Sidebar.php');
 
-// Process report submission
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['admin_report']) && !empty($_POST['admin_report'])) {
         $report = $_POST['admin_report'];
         $uid = $_POST['uid'];
 
-        // Update the adminReport column in the database
-        $update_sql = "UPDATE user SET adminReport = '$report' WHERE uid = $uid";
+        
+        $reporter_uid = $_SESSION['id'];
+
+        
+        $update_sql = "UPDATE user SET adminReport = '$report', reportedBy = '$reporter_uid' WHERE uid = $uid";
         if ($conn->query($update_sql) === TRUE) {
-            $success_message = "Report submitted successfully!";
+            $_SESSION['success_message'] = "Report submitted successfully!";
         } else {
-            $error_message = "Error: " . $conn->error;
+            $_SESSION['error_message'] = "Error: " . $conn->error;
         }
     } else {
-        $error_message = "Report field cannot be empty!";
+        $_SESSION['error_message'] = "Report field cannot be empty!";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -229,7 +239,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <span
                     style="font-size: 16px; margin-right: 10px; padding: 8px; border: 1px solid #4caf50; border-radius: 4px;">Page:</span>
                 <?php
-                // Display pagination links
+                
                 for ($page = 1; $page <= $total_pages; $page++) {
                     echo "<a href='UserInfo.php?page={$page}' style='padding: 8px; margin-right: 5px; text-decoration: none; color: #4caf50; border: 1px solid #4caf50; border-radius: 4px;'>{$page}</a>";
                 }
@@ -251,3 +261,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </body>
 
 </html>
+
+<?php
+mysqli_close($conn);
+?>

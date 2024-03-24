@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weight Prediction Form</title>
+  <link rel="stylesheet" href="prediction.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <form id="predictionForm">
+      <h1>Weight Prediction</h1>
+      <div class="input-box">
+        <input type="number" name="actual_weight" placeholder="Your Actual Weight (kg)" required>
+      </div>
+      <div class="input-box">
+        <input type="number" name="age" placeholder="Age (years)" required>
+      </div>
+      <div class="input-box">
+        <input type="number" name="target_weight" placeholder="Your Target Weight (kg)" required>
+      </div>
+      <div class="input-box">
+        <input type="number" name="duration" placeholder="Exercise Duration (days)">
+      </div>
+      <div class="input-box">
+        <input type="number" name="bmi" placeholder="Your BMI">
+      </div>
+      <div class="radio-container">
+        <label>
+          Male
+          <input type="radio" name="gender" value="male" required>
+          <span class="checkmark"></span>
+        </label>
+        <label>
+          Female
+          <input type="radio" name="gender" value="female" required>
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <div class="radio-container">
+        <label>
+          Rainy
+          <input type="radio" name="weather" value="rainy" required>
+          <span class="checkmark"></span>
+        </label>
+        <label>
+          Sunny
+          <input type="radio" name="weather" value="sunny" required>
+          <span class="checkmark"></span>
+        </label>
+      </div>
+      <button type="submit" class="btn">Predict</button>
+
+      <div id="spinner" class="spinner" style="display: none;"></div>
+    </form>
+  </div>
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <div id="predictionResult">
+      </div>
+      <div class="modal-footer">
+        <button id="closeModalButton">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      const modal = document.getElementById('myModal');
+      const closeModalButton = document.getElementById('closeModalButton');
+      const spinner = document.getElementById('spinner');
+      document.getElementById('predictionForm').addEventListener('submit', function (e) {
+        e.preventDefault();
+        spinner.style.display = "block";
+        let gender = document.querySelector('input[name="gender"]:checked');
+        let gender_value = gender ? gender.value : '';
+        let weather = document.querySelector('input[name="weather"]:checked');
+        let weather_value = weather ? weather.value : '';
+        let weather_rainy_value = false;
+        let weather_sunny = false;
+        let gender_male = false;
+        const API_KEY = "API key here(removed for security purpose)";
+
+        if (weather_value === "rainy") {
+          weather_rainy_value = true;
+        }
+        if (weather_value === "sunny") {
+          weather_sunny = true;
+        }
+        if (gender_value === "male") {
+          gender_male = true;
+        }
+
+        let formData = {
+          actual_weight: this['actual_weight'].value,
+          age: this['age'].value,
+          gender_male: gender_male,
+          dream_weight: this['target_weight'].value,
+          duration: this['duration'].value,
+          bmi: this['bmi'].value,
+          weather_rainy: weather_rainy_value,
+          weather_sunny: weather_sunny
+        }
+
+        fetch('http://127.0.0.1:8000/test/predict-weight', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+        })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data);
+
+            const API_URL = "https://api.openai.com/v1/chat/completions";
+            const userText = `Based on the prediction of ${data.predicted_Calories_to_Burn} calories to burn and recommended exercise ${data.recommended_exercise}, Give me your world class summary and review along with what are some related YouTube videos, blogs, or other resources?`;
+
+            fetch(API_URL, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_KEY}`
+              },
+              body: JSON.stringify({
+                messages: [{ role: "system", content: userText }],
+                model: "gpt-3.5-turbo",
+              })
+            })
+              .then(response => response.json())
+              .then(chatGptData => {
+                const suggestions = chatGptData.choices[0].message.content.trim();
+                const regex = /(https?:\/\/[^\s]+)/g; // Regular expression to find URLs
+                const formattedSuggestions = suggestions.replace(regex, '<a href="$1" target="_blank">$1</a>'); // Make URLs clickable
+                const predictionResult = document.getElementById('predictionResult');
+                predictionResult.innerHTML = `
+              <div class="modal-header">
+                <h2>Prediction Results</h2>
+              </div>
+              <div class="modal-body">
+                <p><strong>Predicted Calories to Burn:</strong> ${data.predicted_Calories_to_Burn}</p>
+                <p><strong>Recommended Exercise:</strong> ${data.recommended_exercise}</p>
+                <p>${formattedSuggestions}</p> 
+              </div>
+            `;
+                modal.style.display = "block";
+                spinner.style.display = "none";
+              })
+              .catch(error => {
+                document.getElementById('predictionResult').textContent = `Predicted Calories to Burn: ${data.predicted_Calories_to_Burn}. Recommended Exercise: ${data.recommended_exercise}`;
+                modal.style.display = "block";
+                spinner.style.display = "none";
+                console.error('Error:', error);
+              });
+          });
+      });
+
+      closeModalButton.onclick = function () {
+        modal.style.display = "none";
+      };
+    });
+  </script>
+</body>
+
+</html>

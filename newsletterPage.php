@@ -36,35 +36,24 @@ if (!$result) {
     <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
-        /* Your existing CSS styles here */
 
-        /* Adjust the margin between cards */
-        .card {
-            margin-bottom: 20px;
-            /* Reduce the bottom margin */
+@keyframes changeBackground {
+            0% {
+                background-image: url('img/1.png');
+            }
+
+            33% {
+                background-image: url('img/2.png');
+            }
+
+            66% {
+                background-image: url('img/3.png');
+            }
+
+            100% {
+                background-image: url('img/4.png');
+            }
         }
-
-        /* Adjustments for "Read More" button */
-        .card {
-            position: relative;
-        }
-
-        .btn-read-more {
-            display: none;
-            /* Initially hide the button */
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            bottom: 3px;
-        }
-
-        .card:hover .btn-read-more {
-            display: block;
-            /* Display button on hover */
-        }
-
-        @import url(https://fonts.googleapis.com/css?family=Raleway:400,500,800);
 
         body {
             height: 100vh;
@@ -72,26 +61,37 @@ if (!$result) {
             justify-content: center;
             align-items: center;
             font-family: "Raleway", Arial, sans-serif;
-            background: #7f9ead;
             position: relative;
-            /* Ensure relative positioning for absolute positioning of navbar */
+            transition: transform 0.2s, box-shadow 0.2s;
+            background: linear-gradient(135deg, #d8d065, #d47070);
+            animation: changeBackground 35s linear infinite;
         }
 
-        /* Navbar Styles */
+        body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    background: linear-gradient(135deg, #d8d065, #d47070); /* Fallback */
+    animation: changeBackground 35s linear infinite;
+    -webkit-filter: blur(8px); /* Chrome, Safari, Opera */
+    filter: blur(8px);
+}
+
         .navbar {
             position: absolute;
             top: 10px;
             right: 10px;
             background-color: #007bff;
-            /* Blue color */
             padding: 1rem;
             backdrop-filter: blur(10px);
-            /* Add blur effect */
         }
 
         .navbar .navbar-brand {
             color: #ffffff;
-            /* White color */
             font-size: 1.5rem;
             font-weight: bold;
             transition: color 0.3s;
@@ -99,7 +99,6 @@ if (!$result) {
 
         .navbar-nav .nav-link {
             color: #ffffff;
-            /* White color */
             font-size: 1.2rem;
             margin-right: 20px;
             transition: color 0.3s;
@@ -107,8 +106,16 @@ if (!$result) {
 
         .navbar-nav .nav-link:hover {
             color: #ffffff;
-            /* White color */
             transform: scale(1.1);
+        }
+
+        .container-news {
+            margin-top: 100px;
+            /* Increase the margin-top value to create more space */
+            height: calc(100vh - 100px);
+            /* Adjust the height accordingly */
+            overflow-y: auto;
+
         }
 
         .card {
@@ -127,7 +134,6 @@ if (!$result) {
         .card:hover {
             box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.5);
             height: auto;
-            /* Adjust height on hover */
         }
 
         .imgbox {
@@ -148,28 +154,22 @@ if (!$result) {
             padding: 10px;
             text-align: left;
             overflow: hidden;
-            /* Hide overflow content initially */
             max-height: 60px;
-            /* Set max height to limit content */
             transition: max-height 0.3s;
-            /* Transition max height for smooth effect */
         }
 
         .card:hover .content {
             max-height: 200px;
-            /* Show full content on hover */
         }
 
         .content h2 {
             color: #007bff;
-            /* Blue color */
             font-size: 1.5rem;
             margin-bottom: 10px;
         }
 
         .content p {
             color: #333;
-            /* Dark color */
             font-size: 1rem;
             line-height: 1.5;
             overflow: hidden;
@@ -178,11 +178,30 @@ if (!$result) {
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
         }
+
+        .btn-read-more {
+            display: none;
+            /* Initially hide the button */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .card:hover .btn-read-more {
+            display: block;
+            /* Display button on hover */
+        }
+
+        .container-news::-webkit-scrollbar {
+            margin-left: -20px;
+            /* Adjust the value as needed to move the scrollbar to the desired position */
+        }
     </style>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
+    <nav class="navbar navbar-expand-md navbar-dark bg-transparent">
         <div class="container">
             <a class="navbar-brand" href="#"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
@@ -210,51 +229,60 @@ if (!$result) {
             </div>
         </div>
     </nav>
-    <div class="container">
-        <div class="row">
 
-            <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($row = mysqli_fetch_assoc($result)) {
-                    ?>
-                    <div class="col-md-4">
-                        <div class="card">
-                            <div class="imgbox">
-                                <img src="super-admin-panel/uploads/<?php echo $row['image']; ?>"
-                                    alt="<?php echo $row['title']; ?>" />
+    <div class="container-news">
+        <div class="container">
+            <div class="row">
+                <?php
+                include 'config.php';
+                $sql = "SELECT * FROM newsletter";
+                $result = mysqli_query($conn, $sql);
+                if (mysqli_num_rows($result) > 0) {
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        ?>
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="imgbox">
+                                    <img src="super-admin-panel/uploads/<?php echo $row['image']; ?>"
+                                        alt="<?php echo $row['title']; ?>" />
+                                </div>
+                                <div class="content">
+                                    <h2>
+                                        <?php echo $row['title']; ?>
+                                    </h2>
+                                    <p>
+                                        <?php echo $row['content']; ?>
+                                    </p>
+                                </div>
+                                <a <?php echo 'href="newsDetails.php?id=' . $row['uid'] . '"'; ?>
+                                    class="btn btn-primary btn-read-more">Read More</a>
                             </div>
-                            <div class="content">
-                                <h2>
-
-                                    <?php echo $row['title']; ?>
-
-                                </h2>
-                                <p>
-                                    <?php echo $row['content']; ?>
-                                    
-                                </p>
-                            </div>
-                            <a <?php echo 'href="newsDetails.php?id='.$row['uid'].'"'; ?> class="btn btn-primary btn-read-more">Read More</a>
-
                         </div>
-                    </div>
-                    <?php
+                        <?php
+                    }
+                } else {
+                    echo "No news available";
                 }
-            } else {
-                echo "No news available";
-            }
-            ?>
-
+                ?>
+            </div>
         </div>
     </div>
+
+      <!-- Footer -->
+  
 
     <!-- Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
+
+
+
 
 <?php
 // Close the database connection

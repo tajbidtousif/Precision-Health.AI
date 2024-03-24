@@ -84,6 +84,9 @@ mysqli_close($conn);
 
         .news-details {
             padding: 40px;
+            margin-top: 100px;
+            /* Increased top margin to push content down from the navbar */
+            margin-bottom: 30px;
         }
 
         .news-details h2 {
@@ -145,13 +148,66 @@ mysqli_close($conn);
             font-size: 0.9rem;
             margin-top: 30px;
         }
+
+        .navbar {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #007bff;
+            padding: 1rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .navbar .navbar-brand {
+            color: #ffffff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-right: 20px;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: #ffffff;
+            transform: scale(1.1);
+        }
     </style>
 </head>
 
 <body>
 
-    <nav class="navbar navbar-expand-md navbar-light fixed-top">
-        <!-- Your navbar code here -->
+    <nav class="navbar navbar-expand-md navbar-light bg-transparent">
+        <div class="container">
+            <a class="navbar-brand" href="#"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="landingpage.php">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="about.php">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="service.php">Services</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="contact.html">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link login-btn" href="#"><i class="fas fa-user-circle"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 
     <div class="container news-details">
@@ -170,9 +226,12 @@ mysqli_close($conn);
         </div>
     </div>
 
-    <!-- Footer -->
-    <!-- Your footer code here -->
-
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 PrecisionHealth.Com. All rights reserved.</p>
+            <p>Leading University, Sylhet, Bangladesh</p>
+        </div>
+    </footer>
     <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>

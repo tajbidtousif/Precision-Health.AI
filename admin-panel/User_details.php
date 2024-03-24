@@ -7,7 +7,6 @@ if (!isset($_SESSION['id']) || $_SESSION['role'] !== 'admin') {
     exit();
 }
 
-// Set admin email in session if not already set (replace with actual admin email retrieval logic)
 if (!isset($_SESSION['admin_email'])) {
     $_SESSION['admin_email'] = "admin@example.com"; // Replace with the actual admin's email
 }
@@ -46,21 +45,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit_report'])) {
         $reason = mysqli_real_escape_string($conn, $_POST['reason']);
 
         if (!empty($category) && !empty($reason)) {
-            // Move the user to the "violated_user" database
+            
             $violated_conn = mysqli_connect($servername, $username, $password, "violated_user");
 
             if (!$violated_conn) {
                 die("Connection to violated_user failed: " . mysqli_connect_error());
             }
 
-            // Insert the user into "violated_user" database with Categories value
+           
             $insert_sql = "INSERT INTO user (name, email, role, Categories, ReasonForDeactivating, status, reportedBy) 
-            VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated', '{$_SESSION['admin_email']}')";
+            VALUES ('{$user_details['name']}', '{$user_details['email']}', '{$user_details['role']}', '$category', '$reason', 'Deactivated', '{$_SESSION['id']}')";
 
             if (mysqli_query($violated_conn, $insert_sql)) {
-                // User moved to "violated_user" successfully
+                
 
-                // Delete the user from the original database
+                
                 $delete_sql = "DELETE FROM user WHERE uid = $user_id";
 
                 if (mysqli_query($conn, $delete_sql)) {

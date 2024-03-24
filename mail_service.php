@@ -21,15 +21,15 @@ function sendVerifcationEmail($email, $verification_code, $description): bool
 		$mail->Host     = 'smtp.gmail.com';
 		$mail->SMTPAuth = true;
 		$mail->Username = 'tajbidtousif@gmail.com';
-		$mail->Password = 'omenzsgmwgchsdfr';
+		$mail->Password = 'opmdrhayomkzxwii';
 		$mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
 		$mail->Port = 465;
 
 
-		$mail->setFrom('tajbidtousif@gmail.com','CSE 4400');
+		$mail->setFrom('tajbidtousif@gmail.com','PrecisionHealth.AI');
 		$mail->addAddress($email);
 
-		$msg = $description.$verification_code;
+		$msg =  "Thank you for choosing PrecisionHealth.AI for your healthcare needs. As part of our commitment to ensuring the security of your account, we are sending you a One-Time Password (OTP) for verification purposes.Thank you for your cooperation.  Your OTP is: " . $verification_code;
 
 		$mail->isHTML(true);
 		$mail->Subject = "Account Verification";

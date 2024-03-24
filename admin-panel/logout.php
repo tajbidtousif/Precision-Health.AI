@@ -9,3 +9,4 @@ session_destroy();
 
 header("Location: /Project-4800/index.php"); 
 exit();
+?>

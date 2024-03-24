@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calorie Burn Prediction & Exercise recommendation</title>
+</head>
+<body>
+        
+    <section class="showcase">
+         <header>
+            <h2 class="logo">Exercise</h2>
+            <div class="toggle"></div>
+         </header>
+     <video class="showcase-video" src="images/background.mp4" muted loop autoplay></video>  
+     <div class="overlay"></div>
+    <div class="text">
+        <h2>Never Stop</h2>
+        <h3>Make You Healthy</h3>
+        <p>
+          Optimize Your Health Journey with Personalized Recommendations Powered by Machine Learning. Achieve Your Fitness Goals with Tailored Exercise and Health Advice. Harness the Power of Data Science for Personalized Health and Exercise Recommendations. Elevate Your Wellness Routine with AI-Driven Health and Exercise Guidance. Transform Your Lifestyle with Intelligent Health and Exercise Suggestions from our ML Platform.
+        </p>
+        <a href="prediction.html">Explore</a>
+    </div>
+    </section>
+        
+     <div class="menu">
+       <ul>
+        <li><a href="../landingpage.php">Home</a></li>
+        <li><a href="../about.php">About</a></li>
+        <li><a href="../service.php">Service</a></li>
+        <li><a href="../contact.html">Contact</a></li>
+       </ul>
+     </div>   
+     
+     <script>
+      const menuToggle = document.querySelector('.toggle');
+      const showcase = document.querySelector('.showcase');
+      menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('active');
+        showcase.classList.toggle('active');
+      })
+     </script>
+
+</body>
+</html>

@@ -10,43 +10,42 @@ if (isset($_SESSION['id'])) {
 
 // LOGIN PROCESS CODE
 if (isset($_POST['login'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, $_POST['password']); 
+	$email = mysqli_real_escape_string($conn, $_POST['email']);
+	$password = mysqli_real_escape_string($conn, $_POST['password']);
 
 	$sqlLogin = "SELECT * FROM user WHERE email = '$email' AND status = 'active'";
 	$resultLogin = mysqli_query($conn, $sqlLogin);
 
-    if (mysqli_num_rows($resultLogin) == 1) {
-        // User found, check password
-        $rowLogin = mysqli_fetch_assoc($resultLogin);
-        $hashedPassword = $rowLogin['password']; // Get hashed password from database
+	if (mysqli_num_rows($resultLogin) == 1) {
+		$rowLogin = mysqli_fetch_assoc($resultLogin);
+		$hashedPassword = $rowLogin['password']; 
+
 		
-        // Verify the entered password with the hashed password
-        if (strcmp(md5($password), $hashedPassword)==0) { // Compare hashed passwords
-            // Passwords match, proceed with login
-            $_SESSION['id'] = $rowLogin['uid'];
-            $_SESSION['name'] = $rowLogin['name'];
-            $_SESSION['role'] = $rowLogin['role'];
-            
-            // Redirect to appropriate dashboard based on user role
-            if ($rowLogin['role'] == 'user') {
-                header("Location: service.php");
-                exit();
-            } elseif ($rowLogin['role'] == 'admin') {
-                header("Location: admin-panel/admin_dashboard.php");
-                exit();
-            } elseif ($rowLogin['role'] == 'superadmin') {
-                header("Location: super-admin-panel/superAdminDashboard.php");
-                exit();
-            }
-        } else {
-            // Passwords don't match, show error message
-            echo "<script>alert('Incorrect password');</script>";
-        }
-    } else {
-        // No user found with the provided email
-        echo "<script>alert('No user found');</script>";
-    }
+		if (strcmp(md5($password), $hashedPassword) == 0) { 
+			// Passwords match, proceed with login
+			$_SESSION['id'] = $rowLogin['uid'];
+			$_SESSION['name'] = $rowLogin['name'];
+			$_SESSION['role'] = $rowLogin['role'];
+
+			// Redirect to appropriate dashboard based on user role
+			if ($rowLogin['role'] == 'user') {
+				header("Location: service.php");
+				exit();
+			} elseif ($rowLogin['role'] == 'admin') {
+				header("Location: admin-panel/admin_dashboard.php");
+				exit();
+			} elseif ($rowLogin['role'] == 'superadmin') {
+				header("Location: super-admin-panel/superAdminDashboard.php");
+				exit();
+			}
+		} else {
+			
+			echo "<script>alert('Incorrect password');</script>";
+		}
+	} else {
+	
+		echo "<script>alert('No user found');</script>";
+	}
 }
 
 
@@ -84,9 +83,8 @@ if (isset($_POST['register'])) {
 
 			if ($updateResult) {
 				require 'class/class.phpmailer.php';
-
-				// Your email verification code and other logic here...
-
+				$description = "Thank you for choosing PrecisionHealth.AI for your healthcare needs. As part of our commitment to ensuring the security of your account, we are sending you a One-Time Password (OTP) for verification purposes.Thank you for your cooperation. ";
+				sendVerifcationEmail($email, $otp, $description);
 				echo '<script>alert("Please Check Your Email for Verification Code");</script>';
 				header('Refresh:1; url=email_verify.php?code=' . $activation_code);
 			}
@@ -95,12 +93,14 @@ if (isset($_POST['register'])) {
 		$email = $email;
 		$verification_code = $otp;
 
-		// Your email verification code and other logic here...
+		
 
 		$sqlInsert = "INSERT INTO user (name, email, password, otp, activation_code, role) VALUES ('" . $name . "', '" . $email . "', '" . $password . "', '" . $otp . "', '" . $activation_code . "', 'user')";
 		$insertResult = mysqli_query($conn, $sqlInsert);
 
 		if ($insertResult) {
+			$description = "add description ";
+			sendVerifcationEmail($email, $otp, $description);
 			echo '<script>alert("Please Check Your Email for Verification Code");</script>';
 			header('Refresh:1; url=email_verify.php?code=' . $activation_code);
 		} else {
@@ -133,19 +133,15 @@ if (isset($_POST['register'])) {
 			<form action="" method="POST">
 				<div class="form-group">
 					<label>Email</label>
-					<input type="email" name="email" placeholder="Email"
-						value="<?php if (isset($_COOKIE['email'])) {
-							echo $_COOKIE['email'];
-						} ?>" autocomplete="off"
-						required>
+					<input type="email" name="email" placeholder="Email" value="<?php if (isset($_COOKIE['email'])) {
+						echo $_COOKIE['email'];
+					} ?>" autocomplete="off" required>
 				</div>
 				<div class="form-group">
 					<label>Password</label>
-					<input type="password" name="password" placeholder="Password"
-						value="<?php if (isset($_COOKIE['password'])) {
-							echo $_COOKIE['password'];
-						} ?>" autocomplete="off"
-						required>
+					<input type="password" name="password" placeholder="Password" value="<?php if (isset($_COOKIE['password'])) {
+						echo $_COOKIE['password'];
+					} ?>" autocomplete="off" required>
 				</div>
 				<div class="form-group extra">
 					<input type="checkbox" name="rememberme" value="checked" <?php if (isset($_COOKIE['email'])) {
@@ -169,12 +165,12 @@ if (isset($_POST['register'])) {
 				<a href="javascript:void(0);" id="signup-button">Signup</a>
 			</div>
 		</div>
-	</div> <!-- End of Login Wrapper -->
+	</div> 
 
 
-	<div class="wrapper display" id="signup-side">
+	<div class="wrapper display reg-left" id="signup-side">
 		<div class="left-side signUp">
-			<h2>Signup</h2>
+			<h2>Sign Up</h2>
 			<hr>
 			<form action="" method="POST" onsubmit="return validation()">
 
@@ -200,6 +196,12 @@ if (isset($_POST['register'])) {
 					<span id="passworderror" style="color: red;"></span>
 				</div>
 				<div class="form-group">
+					<label>Confirm Password</label>
+					<input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password"
+						class="form-control" required>
+					<span id="confirm_password_error" style="color: red;"></span>
+				</div>
+				<div class="form-group">
 					<label></label>
 					<input type="submit" name="register" id="submit" value="Signup">
 				</div>
@@ -222,10 +224,14 @@ if (isset($_POST['register'])) {
 			var name = document.getElementById("name").value;
 			var email = document.getElementById("email").value;
 			var password = document.getElementById("password").value;
+			var confirm_password = document.getElementById("confirm_password").value;
 
 			var namecheck = /^[A-Za-z. ]{3,30}$/;
-			var emailcheck = /^[A-Za-z0-9_]{3,}@[A-Za-z]{3,}[.]{1}[A-Za-z.]{2,6}$/;
-			var passwordcheck = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{6,16}$/;
+			var emailcheck = /^(cse_([0-9]+)@lus\.ac\.bd|([A-Za-z0-9_]+)@(gmail|yahoo|hotmail)\.com)$/;
+			var passwordcheck = /^(?=.*[0-9])(?=.*[!@#$%^&])[A-Za-z0-9!@#$%^&]{6,16}$/;
+
+			// Yo bro! Hash the password using MD5
+			var hashed_password = md5(password);
 
 			if (namecheck.test(name)) {
 				document.getElementById("nameerror").innerHTML = "";
@@ -245,11 +251,17 @@ if (isset($_POST['register'])) {
 				document.getElementById("passworderror").innerHTML = "** Password is Invalid";
 				return false;
 			}
+			if (password === confirm_password) {
+				document.getElementById("confirm_password_error").innerHTML = "";
+			} else {
+				document.getElementById("confirm_password_error").innerHTML = "** Passwords do not match";
+				return false;
+			}
 		}
 	</script>
 
 
-	<!-- End of Signup Wrapper -->
+
 
 </body>
 

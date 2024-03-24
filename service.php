@@ -21,11 +21,11 @@ if (isset($_POST['logout'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Health Dashboard</title>
-  <!-- Bootstrap CSS -->
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-  <!-- Font Awesome -->
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <!-- Custom CSS -->
+ 
   <style>
     body {
       font-family: 'Arial', sans-serif;
@@ -57,7 +57,6 @@ if (isset($_POST['logout'])) {
     .dashboard {
       padding: 40px;
       margin-top: 80px;
-      /* Adjust the top margin */
     }
 
     .dashboard h2 {
@@ -212,7 +211,7 @@ if (isset($_POST['logout'])) {
         <?php else: ?>
           <!-- If not logged in, display login button -->
           <form class="d-flex">
-            
+
             <button class="btn btn-outline-success" type="button" onclick="redirectToIndex()">Login</button>
           </form>
         <?php endif; ?>
@@ -225,11 +224,11 @@ if (isset($_POST['logout'])) {
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="feature-item">
           <i class="fas fa-weight"></i>
-          <h4>Personalized Health</h4>
-          <p>Get personalized health advice based on your BMI data and health condition.</p>
+          <h4>Personalized Exercise</h4>
+          <p>Get personalized health advice based on your BMI data and individual health condition</p>
           <?php if ($isLoggedIn): ?>
             <!-- If logged in, enable the button -->
-            <a href="getAdvice.php" class="btn btn-primary btn-block">Get Advice</a>
+            <a href="UI\UI.html" class="btn btn-primary btn-block">Get Advice</a>
           <?php else: ?>
             <!-- If not logged in, disable the button -->
             <button class="btn btn-primary btn-block" disabled>Login to Get Advice</button>
@@ -238,35 +237,35 @@ if (isset($_POST['logout'])) {
       </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
-    <div class="feature-item">
-        <i class="fas fa-tasks"></i>
-        <h4>Health Analysis</h4>
-        <p>Set your health goals and track your progress towards achieving them with personalized insights.</p>
-        <?php if ($isLoggedIn) : ?>
+        <div class="feature-item">
+          <i class="fas fa-tasks"></i>
+          <h4>PrecisionHealth.AI</h4>
+          <p>Elevate your health journey with PrecisionHealth.AI, your AI-powered wellness advisor.</p>
+          <?php if ($isLoggedIn): ?>
             <!-- If logged in, enable the button -->
-            <a href="setGoals.php" class="btn btn-primary btn-block">Set Goals</a>
-        <?php else : ?>
+            <a href="healthAi/index.html" class="btn btn-primary btn-block">Set Goals</a>
+          <?php else: ?>
             <!-- If not logged in, disable the button -->
             <button class="btn btn-primary btn-block" disabled>Login to Set Goals</button>
-        <?php endif; ?>
-    </div>
-</div>
+          <?php endif; ?>
+        </div>
+      </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="feature-item">
           <i class="fas fa-user-md"></i>
           <h4>News-Letter</h4>
-          <p>Read informative about health advice from us</p>
+          <p>Stay informed with our exclusive health newsletter, delivering the latest updates, tips.</p>
           <a href="newsletterPage.php" class="btn btn-primary btn-block">READ MORE</a>
         </div>
       </div>
 
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="feature-item">
-          <i class="fas fa-shopping-cart"></i>
-          <h4>Health E-Commerce</h4>
-          <p>Shop for health products and supplements from trusted brands.</p>
-          <a href="comingSoon.php" class="btn btn-primary btn-block">SHOP NOW</a>
+        <i class="fas fa-heartbeat"></i>
+          <h4>BMI Measurement</h4>
+          <p>Easily determine your BMI with our convenient BMI measurement tool, ensuring you stay on track with your health goals.</p>
+          <a href="bmi.html" class="btn btn-primary btn-block">Measure Now</a>
         </div>
       </div>
     </div>
