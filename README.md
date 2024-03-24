@@ -20,7 +20,7 @@ https://youtu.be/MQZ7Q1XZZis?si=-TsW7-LQbJfG6wC2
 Follow these steps to set up and run "Precision Health.AI" on your local machine:
 
 1. **Clone the repository:**
-    https://github.com/tajbidtousif/Precision-Health-AI.git
+    https://github.com/tajbidtousif/Project-4800.git
 2. **Set up the Python environment:**
    ```  python -m venv venv ```
    ```  source venv/bin/activate # On Windows use venv\Scripts\activatesource venv/bin/activate # On Windows use venv\Scripts\activate ```
