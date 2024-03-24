@@ -9,9 +9,10 @@ It meticulously takes into account an individual's physical attributes, lifestyl
 - **AI Integrated ChatBot**: Real-time health-related assistance powered by GPT-3.5-Turbo.
 - **Dynamic Newsletter Board**: Stay updated with the latest health news.
 - **Admin & Super Admin Panels**: Tools for managing platform content and user engagement.
-![Precision](https://github.com/takrimchy/Project-4800/assets/83010929/9597bc6b-af35-41f9-890a-63a518f64306)
+![Precision](https://github.com/tajbidtousif/Precision-Health.AI/assets/86789646/9ac3ac94-17de-4c9b-8932-98593c7c98c5)
 
 ## Project Video
+
 
 https://youtu.be/MQZ7Q1XZZis?si=-TsW7-LQbJfG6wC2
 
@@ -47,9 +48,9 @@ We welcome contributions to "Precision Health.AI". If you have suggestions or im
 ## Contact
 
 For further information or inquiries, please contact us at:
-
 - Shah Tajbid Tousif - tajbidtousif@gmail.com
-
+- Takrim Elahi Chy - elahitakrim@gmail.com
+- Suchona Ghosh Tithi - suchonaghosh159@gmail.com
 ## Thank You
 
 Thank you for your interest in "Precision Health.AI". We hope our project inspires further innovation in personalized healthcare technology and we look forward to seeing how our project evolves with your contributions.
