@@ -1,47 +1,58 @@
-# Shah Tajbid Tousif's Portfolio
 
-Welcome to my portfolio repository! This project showcases my skills, projects, research, and blog articles.
+# Python + PHP + MYSQL 
 
-## About Me
+**Precision Health.AI** is an innovative capstone project in our final year at Leading University, Sylhet. Our mission is to enhance individual health through personalized recommendations, powered by machine learning and artificial intelligence.
 
-I am a passionate software developer and machine learning enthusiast, with a Bachelor of Science degree in Computer Science & Engineering from Leading University, Sylhet. I have a versatile skill set adept at navigating diverse web technologies and substantial experience in machine learning and problem-solving.
+## Features
 
-## Technologies Used
+- **Personalized Health Recommendation System**: An enhanced Calories Burn and Exercise Recommendation System that we have created. In essence, this technology predicts the number of calories required for burning and generates customized exercise plans for each user based on machine learning, specifically on linear regression. 
+It meticulously takes into account an individual's physical attributes, lifestyle, and environment to identify the optimal form of exercise to burn calories, support overall wellness, and aid in weight management..
+- **AI Integrated ChatBot**: Real-time health-related assistance powered by GPT-3.5-Turbo.
+- **Dynamic Newsletter Board**: Stay updated with the latest health news.
+- **Admin & Super Admin Panels**: Tools for managing platform content and user engagement.
+  
+![Precision](https://github.com/tajbidtousif/Precision-Health.AI/assets/86789646/9ac3ac94-17de-4c9b-8932-98593c7c98c5)
 
-My portfolio website is built using the following technologies:
+## Project Video
 
-- HTML5
-- CSS3
-- JavaScript
-- Bootstrap
-- AOS (Animate On Scroll) library
-- Google Fonts
-- Font Awesome icons
+
+https://youtu.be/MQZ7Q1XZZis?si=-TsW7-LQbJfG6wC2
 
 ## Getting Started
 
-To view my portfolio locally, follow these steps:
+Follow these steps to set up and run "Precision Health.AI" on your local machine:
 
 1. **Clone the repository:**
-    ```bash
-    git clone https://github.com/your-username/portfolio.git
-    ```
+    https://github.com/tajbidtousif/Precision-Health.AI.git
+2. **Set up the Python environment:**
+   ```  python -m venv venv ```
+   ```  source venv/bin/activate # On Windows use venv\Scripts\activatesource venv/bin/activate # On Windows use venv\Scripts\activate ```
+3. **Install the required dependencies:**
+   ```  pip install -r requirements.txt ```
+4. **Start the FastAPI server:**
+    ``` uvicorn main:app --reload ```
 
-2. **Navigate to the project directory:**
-    ```bash
-    cd portfolio
-    ```
+## Tools and Technologies
 
-3. **Open index.html in your preferred web browser.**
+- **Frontend**: HTML, CSS, Bootstrap, JavaScript
+- **Backend**: Python, FastAPI, PHP
+- **Database**: MySQL
+- **Tools**: XAMPP, Postman, Google Colab
 
-## Structure
+## Contributing
 
-- `index.html`: Main HTML file containing the structure and content of the portfolio.
-- `assets/`: Directory containing all the assets used in the portfolio, such as images, icons, and CSS files.
-- `README.md`: This file providing information about the portfolio and instructions on how to set it up locally.
-
-Feel free to explore my projects, research, and blog articles showcased in the portfolio!
+We welcome contributions to "Precision Health.AI". If you have suggestions or improvements, feel free to fork this repository, make changes, and submit pull requests. You can also open issues for discussion.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+"Precision Health.AI" is made available under the MIT License. For more details, see the LICENSE file.
+
+## Contact
+
+For further information or inquiries, please contact us at:
+- Shah Tajbid Tousif - tajbidtousif@gmail.com
+- Takrim Elahi Chy - elahitakrim@gmail.com
+- Suchona Ghosh Tithi - suchonaghosh159@gmail.com
+## Thank You
+
+Thank you for your interest in "Precision Health.AI". We hope our project inspires further innovation in personalized healthcare technology and we look forward to seeing how our project evolves with your contributions.
