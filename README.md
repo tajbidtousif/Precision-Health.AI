@@ -2,7 +2,7 @@
 # Python + PHP + MYSQL 
 
 **Precision Health.AI** is an innovative capstone project in our final year at Leading University, Sylhet. Our mission is to enhance individual health through personalized recommendations, powered by machine learning and artificial intelligence.
-
+ 
 ## Features
 
 - **Personalized Health Recommendation System**: An enhanced Calories Burn and Exercise Recommendation System that we have created. In essence, this technology predicts the number of calories required for burning and generates customized exercise plans for each user based on machine learning, specifically on linear regression. 
